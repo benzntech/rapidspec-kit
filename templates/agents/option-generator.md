@@ -54,8 +54,11 @@ From research.md, identify at least 3 fundamentally different approaches:
 ```text
 
 Example for authentication:
+
 1. Session-based approach (from reference implementations)
+
 2. Token-based (JWT) approach (from industry standards)
+
 3. OAuth/Social approach (from best practices)
 
 Each should:
@@ -258,9 +261,13 @@ Create a complete options.md artifact with:
 ## Next Steps
 
 1. Review these 3 options
+
 2. Research-analyzer will identify trade-offs
+
 3. Cost-estimator will refine time/risk/complexity
+
 4. Final recommendation engine will recommend best option
+
 5. User decision: accept recommendation or choose different option
 
 ```text

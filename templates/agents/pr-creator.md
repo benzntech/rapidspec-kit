@@ -312,10 +312,15 @@ If any breaking changes detected:
 Old session-based authentication has been removed and replaced with JWT tokens.
 
 **Migration Instructions**:
+
 1. Existing sessions will not be valid after deployment
+
 2. Users must re-authenticate
+
 3. Mobile apps must update to use JWT endpoints
+
 4. Third-party integrations need API token migration
+
 5. See migration guide: docs/migration-jwt.md
 
 **Timeline**:

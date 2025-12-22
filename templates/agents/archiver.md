@@ -404,9 +404,13 @@ npm run deploy
 ## Next Steps
 
 1. Deploy to production (if not already)
+
 2. Monitor for issues
+
 3. Gather user feedback
+
 4. Plan future iterations
+
 5. Close out feature work
 
 ---

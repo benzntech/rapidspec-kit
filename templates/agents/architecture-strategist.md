@@ -526,9 +526,13 @@ Extract shared logic into a separate module (userOrders.ts)
 ## Recommendations
 
 1. Resolve circular dependencies
+
 2. Extract shared service modules
+
 3. Implement dependency injection
+
 4. Split god objects
+
 5. Add integration tests
 
 ```text

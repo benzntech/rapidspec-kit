@@ -455,6 +455,7 @@ For each issue found:
 **Severity**: ❌ Critical / ⚠️ Warning / 💡 Info
 
 **File**: src/path/to/file.ts
+
 **Lines**: 42-65
 
 **Issue**:
@@ -550,9 +551,13 @@ For each issue found:
 ## Recommendations
 
 1. Fix critical issues before merging
+
 2. Address warnings in review
+
 3. Consider info items for follow-up PR
+
 4. Add tests for new code paths
+
 5. Consider refactoring high-complexity functions
 
 ```text

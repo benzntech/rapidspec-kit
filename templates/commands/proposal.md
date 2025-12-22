@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, proposal]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch, WebFetch, Task
 argument-hint: <change-id> [description]
+
 ---
 
 <!-- RAPeckit.SPEC:START -->
@@ -34,26 +35,37 @@ All file references must be verified with Read, Grep, or Git commands.
 Run these agents in parallel at the same time:
 
 Investigation agents:
+
 - Task git-history-analyzer(affected_files)
+
 - Task pattern-recognition-specialist(affected_files)
 
 Research agents:
+
 - Task best-practices-researcher(feature_description, technology_stack)
+
 - Task framework-docs-researcher(detected_framework)
 
 **Verification Checklist:**
 
 - [ ] Read actual files with `@file/path`, `Grep`, `Glob`
+
 - [ ] Check git history: `git log --oneline -- path/to/file`
+
 - [ ] Find existing patterns in codebase
+
 - [ ] Document all findings with specific file paths (e.g., `src/app/page.tsx:42`)
 
 **Research Collection:**
 
 - [ ] WebSearch for latest patterns (e.g., "Next.js 16 caching patterns 2025")
+
 - [ ] Check reference repositories (midday-ai, dub, epic-stack)
+
 - [ ] Read library CHANGELOG.md for breaking changes
+
 - [ ] Analyze git log for past decisions: `git log --all --grep="keyword"`
+
 - [ ] Include URLs to external documentation and best practices guides
 
 ### 2. Synthesize Research & Present Options
@@ -67,29 +79,46 @@ Consider trade-offs: time, risk, complexity, and pattern alignment.
 **Option Structure:**
 
 Present 2-3 concrete approaches with:
+
 - **Before** (verified actual code with @file:line)
+
 - **After** (proposed changes)
+
 - **Pros/Cons/Cost** (time, risk, complexity)
+
 - **Pattern Match** (how it aligns with project conventions)
+
 - Mark recommended option with ⭐
 
 **Example Presentation:**
 
 ```markdown
 ### Option 1: Client + DB Unique Constraint ⭐ (Recommended)
+
 **Before:** @src/app/dashboard/page.tsx:42 - No duplicate check
+
 **After:** Add client validation + unique index on `links` table
+
 **Pros:** Strong data integrity, prevents race conditions
+
 **Cons:** Migration required, slightly slower inserts
+
 **Cost:** Time: 2h, Risk: Low, Complexity: Medium
+
 **Pattern Match:** ✅ Follows @midday-ai/midday deduplication pattern
 
 ### Option 2: Client Warning Only
+
 **Before:** @src/app/dashboard/page.tsx:42 - No duplicate check
+
 **After:** Show warning toast if duplicate detected
+
 **Pros:** No migration, fast implementation
+
 **Cons:** No DB enforcement, race conditions possible
+
 **Cost:** Time: 30m, Risk: Medium, Complexity: Low
+
 **Pattern Match:** ⚠️ Not recommended for production
 ```
 
@@ -98,7 +127,9 @@ Present 2-3 concrete approaches with:
 <thinking>
 Present options clearly and wait for user confirmation.
 User may choose option number, say "1", "2", "3", or option number
+
 - User says "yes" (go) to proceed with recommended option
+
 - User says "wait" (wait) or "no" (no) to change direction
 
 **DO NOT proceed to file generation until user confirms their choice.**
@@ -120,28 +151,45 @@ Design issues caught now are 10x cheaper to fix than during implementation.
 **Run these agents in parallel based on selected option:**
 
 **If Database changes detected:**
+
   - Review schema design, indexes, constraints
+
   - Validate migration safety and rollback plan
+
   - Suggest performance optimizations (denormalization, caching)
+
   - Check RLS policies before writing
+
   - Confirm index strategy for query patterns
 
 **If Next.js/React changes detected:**
+
 - Task nextjs-architecture-expert(component_structure, routing, selected_option)
+
   - Review Server/Client Component split
+
   - Validate routing and data fetching patterns
+
   - Check metadata and caching strategy
+
   - Suggest layout and page structure
+
   - Validate async params/searchParams usage
 
 **Design Review Checklist:**
 
 After agents complete:
+
 - [ ] Schema design validated (if DB changes)
+
 - [ ] Migration safety confirmed (if DB changes)
+
 - [ ] Component architecture approved (if Next.js changes)
+
 - [ ] Data fetching strategy validated (if Next.js changes)
+
 - [ ] Design feedback incorporated into proposal
+
 - [ ] Ready to scaffold files with validated design
 
 **Example Design Review:**
@@ -185,6 +233,7 @@ NEVER skip files - populate proposal.md, tasks.md, investigation.md, research.md
 **Step 4a: Scaffold Templates**
 ```bash
 # Run CLI to create template files
+
 rapidspec proposal <change-id>
 ```
 
@@ -199,22 +248,28 @@ Now populate these scaffolded files in `rapidspec/changes/<change-id>/`:
 # Change: [Brief Description]
 
 ## Why
+
 [1-2 sentences: problem or opportunity]
 
 ## Code Verification
+
 - [x] Read actual files: @path/to/file:line
+
 - [x] Git history checked: [findings from git-history-analyzer]
+
 - [x] Existing patterns found: [patterns from code-verifier]
 
 ## What Changes
 
 ### Before (Verified Actual Code)
+
 \```typescript
 // @src/app/dashboard/page.tsx:42
 [actual current code from verification]
 \```
 
 ### After (Proposed)
+
 \```typescript
 [new code based on chosen option]
 \```
@@ -222,17 +277,25 @@ Now populate these scaffolded files in `rapidspec/changes/<change-id>/`:
 ## Option Analysis
 
 ### Option 1: [Approach] ⭐ (Recommended)
+
 **Pros:** [benefits from best-practices-researcher]
+
 **Cons:** [drawbacks]
+
 **Cost:** Time: [X], Risk: [low/med/high], Complexity: [low/med/high]
+
 **Pattern Match:** ✅ Follows @docs/[reference from framework-docs-researcher]
 
 ## Recommendation
+
 Option 1 because: [evidence-based reasoning from agent findings]
 
 ## Impact
+
 - Affected specs: [list]
+
 - Affected files: [list with line numbers from code-verifier]
+
 - Breaking changes: [yes/no, details]
 ```
 
@@ -241,12 +304,15 @@ Option 1 because: [evidence-based reasoning from agent findings]
 # Investigation: [Change ID]
 
 ## Current State Analysis
+
 [Findings from code-verifier agent]
 
 ## Git History
+
 [Relevant commits and patterns from git-history-analyzer]
 
 ## Existing Patterns
+
 [Codebase patterns that inform this change]
 ```
 
@@ -255,12 +321,15 @@ Option 1 because: [evidence-based reasoning from agent findings]
 # Research: [Change ID]
 
 ## Best Practices
+
 [Findings from best-practices-researcher agent]
 
 ## Framework Documentation
+
 [Relevant docs from framework-docs-researcher agent]
 
 ## Reference Implementations
+
 - [Links to reference repos and their approaches]
 ```
 
@@ -269,41 +338,60 @@ Option 1 because: [evidence-based reasoning from agent findings]
 ## 1. Implementation
 
 ### 1.1 [Step Name] (X min) - Checkpoint ⏸
+
 - [ ] [specific task]
+
 - [ ] [specific task]
+
 **Checkpoint:** User can test here and change direction
 
 ### 1.2 [Next Step] (Y min) - Checkpoint ⏸
+
 - [ ] [specific task]
+
 **Checkpoint:** User can test here
 
 ## 2. Testing
+
 - [ ] E2E tests added (if user-facing)
+
 - [ ] Unit tests added (if business logic)
 
 ## 3. Review (run /rapidspec.review after implementation)
+
 - [ ] @agent-code-verifier: Verify implementation
+
 - [ ] @agent-security-auditor: Security audit
+
 - [ ] Fix any critical issues
 ```
 
 **`specs/<capability>/spec.md`** - RapidSpec deltas:
 ```markdown
 ## ADDED Requirements
+
 ### Requirement: [Feature Name]
+
 The system SHALL [requirement text]
 
 #### Scenario: [Success case]
+
 - **WHEN** [condition]
+
 - **THEN** [expected result]
 
 ## MODIFIED Requirements
+
 ### Requirement: [Existing Feature]
+
 [Complete modified requirement text]
 
 ## REMOVED Requirements
+
 ### Requirement: [Deprecated]
+
 **Reason**: [why]
+
 **Migration**: [how to migrate existing usage]
 ```
 
@@ -316,12 +404,15 @@ Use rapidspec show to verify generated files are correct.
 
 ```bash
 # View generated proposal
+
 rapidspec show <change-id>
 
 # View deltas only (save tokens)
+
 rapidspec show <change-id> --json --deltas-only
 
 # Validate structure and content
+
 rapidspec validate <change-id> --strict
 ```
 
@@ -359,8 +450,10 @@ AI synthesizes:
 
 AI presents:
 ### Option 1: Client + DB Unique Constraint ⭐
+
 - Time: 2h, Risk: Low, Pattern: 100% match with midday.ai
 ### Option 2: Client Warning Only
+
 - Time: 30m, Risk: Medium (no DB enforcement)
 
 AI: "Which option? Reply '1' or '2'"
@@ -433,16 +526,23 @@ Good: Task framework-docs-researcher(next.js, authentication)
 ## Reference
 
 - Search existing requirements: `rg -n "Requirement:|Scenario:" rapidspec/specs`
+
 - Inspect proposal: `rapidspec show <id> --json --deltas-only`
+
 - Check specs: `rapidspec show <spec> --type spec`
+
 - Show diffs (Before → After) with file:line references
+
 - Verify code exists before proposing - never assume or use "imaginary code"
 
 ## Notes
 
 - **Always run agents in parallel** for faster context gathering
+
 - **Wait for user confirmation** before generating files
+
 - **Use RapidSpec format** for all proposal files
+
 - **Verify everything** with actual code reads, never assume
 
 <!-- RAPIDSPEC:END -->

@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, commit, git]
 allowed-tools: Read, Bash, Grep, Glob, Task
 argument-hint: [message] | --no-verify | --amend
+
 ---
 
 <!-- SPECKIT.SPEC:START -->
@@ -38,8 +39,11 @@ This prevents marking tasks complete incorrectly.
    git diff
    git log --oneline -5
    ```
+
    - List all modified, added, deleted files
+
    - Analyze actual code changes
+
    - Check recent commit messages for style
 
 ### 2. Match Changes to Tasks
@@ -51,12 +55,19 @@ Capture any discovered work not in original task list.
 </thinking>
 
 **Task verification process:**
+
    - Read `rapidspec/changes/<change-id>/tasks.md`
+
    - For each task, check if actual git changes match:
+
      - Task 1.2: API Validation → Check API route files
+
      - Task 1.3: UI Toast → Check component files
+
    - Mark matching tasks as `[x]`
+
    - Leave incomplete tasks as `[ ]`
+
    - Capture discovered work not in original tasks
 
 ### 3. Update tasks.md
@@ -67,8 +78,11 @@ Document discovered work for traceability and future reference.
 </thinking>
 
 **Actions:**
+
    - Update checkboxes: `[ ]` → `[x]` for completed tasks
+
    - Add "Discovered Tasks" section if unplanned work found
+
    - Show completion status: "5/6 tasks complete"
 
 ### 4. Generate Commit Message
@@ -83,15 +97,21 @@ Include completed tasks, discovered work, and testing information.
    type(scope): brief description
 
    ## Completed Tasks (X/Y)
+
    - Task description
+
    - Task description
 
    ## Additional Improvements (if discovered work)
+
    - Unplanned improvement
+
    - Unplanned improvement
 
    ## Testing
+
    - E2E: test-file.spec.ts ✓
+
    - Unit: test.test.ts ✓
 
    🤖 Generated with Claude Code
@@ -106,8 +126,11 @@ User may want to revise message or change what's committed.
 </thinking>
 
 **Actions:**
+
    - Show commit message preview
+
    - Ask: "Ready to commit? (yes to proceed)"
+
    - If user says "wait" or "revise", modify message
 
 ### 6. Create Commit
@@ -122,17 +145,27 @@ Show commit hash and suggest next steps in workflow.
    git add <files>
    git commit -m "<message>"
    ```
+
    - Show commit hash
+
    - Suggest next steps: `/rapidspec.review` or `/rapidspec.archive`
 
 ## Commit Types
+
 - `feat`: New feature
+
 - `fix`: Bug fix
+
 - `refactor`: Code restructuring
+
 - `perf`: Performance improvement
+
 - `test`: Test addition
+
 - `docs`: Documentation
+
 - `chore`: Maintenance
+
 - `style`: Formatting
 
 **Examples**
@@ -159,12 +192,17 @@ Commit message:
 feat(ui): add loading states with Suspense boundaries
 
 ## Completed Tasks (3/3)
+
 - Add Suspense boundary to dashboard page
+
 - Create loading.tsx with skeleton UI
+
 - Test loading state behavior
 
 ## Testing
+
 - E2E: dashboard/loading.spec.ts ✓
+
 - Manual testing: verified Suspense works ✓
 
 🤖 Generated with Claude Code
@@ -194,7 +232,9 @@ Matching to tasks.md...
 Status: 2/4 tasks complete
 
 Options:
+
 1. Commit partial work (2/4 tasks)
+
 2. Complete remaining tasks first
 
 Which? (1 or 2)
@@ -206,10 +246,13 @@ Commit message:
 feat(auth): add mutex to prevent token refresh race
 
 Partial implementation (2/4 tasks):
+
 - Update client.ts to use new createBrowserClient
 
 Remaining:
+
 - Update all auth calls to use new client
+
 - Add error handling for mutex timeout
 
 Ready? (yes)
@@ -237,14 +280,21 @@ Commit message:
 feat(smart-links): prevent duplicate links per release
 
 ## Completed Tasks (5/5)
+
 - API Validation: 400 error handling
+
 - UI Toast: duplicate warning
+
 - E2E Test: duplicate prevention flow
+
 - Unit Test: validation logic
 
 ## Additional Improvements
+
 - Performance: Add index on release_id
+
 - Code quality: Extract validateSmartLink()
+
 - Fix: Type error in SmartLinkForm
 
 Ready? (yes)
@@ -274,11 +324,17 @@ Good: Add "Discovered Tasks" → Update tasks.md
 ```
 
 **Reference**
+
 - Always run `git diff` and `git status` first
+
 - Update tasks.md with actual completion status
+
 - Conventional commit format: `type(scope): description`
+
 - User says "yes" (go), "wait" (wait), "no" (no)
+
 - Can commit multiple times per spec
+
 - After commit, suggest `/rapidspec.review` for quality check
 
 <!-- RAPIDSPEC:END -->

@@ -9,13 +9,17 @@ The system SHALL [requirement description]
 #### Scenario: [Success case]
 
 - **GIVEN** [precondition]
+
 - **WHEN** [action/condition]
+
 - **THEN** [expected result]
 
 #### Scenario: [Error case]
 
 - **GIVEN** [precondition]
+
 - **WHEN** [invalid action/condition]
+
 - **THEN** [expected error behavior]
 
 ---
@@ -29,12 +33,15 @@ The system SHALL [complete modified requirement text]
 **Changes:**
 
 - Changed: [what changed from original]
+
 - Reason: [why this change was needed]
 
 #### Scenario: [Updated scenario]
 
 - **GIVEN** [precondition]
+
 - **WHEN** [action/condition]
+
 - **THEN** [new expected result]
 
 ---

@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, finalize, archive]
 allowed-tools: Read, Write, Edit, Bash, Task
 argument-hint: <change-id>
+
 ---
 
 <!-- SPECKIT.SPEC:START -->
@@ -30,16 +31,25 @@ We will execute the archive process.
 </thinking>
 
 **Run Archive Command:**
+
 - Execute the `archive` command/capability.
+
 - Refer to `templates/commands/archive.md` for details if needed.
 
 **Action:**
+
 1.  Check for `/rapidspec.archive` command availability.
+
 2.  If available, execute `/rapidspec.archive <change-id>`.
+
 3.  If not, perform manual archive steps:
+
     - Verify tasks complete.
+
     - Move to archive directory.
+
     - Merge spec deltas.
+
     - Validate.
 
 ## Examples

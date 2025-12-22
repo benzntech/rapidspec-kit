@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, apply, implementation]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 argument-hint: <change-id>
+
 ---
 
 <!-- SPECKIT.SPEC:START -->
@@ -97,10 +98,15 @@ This provides context for implementation decisions and prevents "imaginary code"
 </thinking>
 
 **Immediate Actions:**
+
 - [ ] Read `rapidspec/changes/<change-id>/proposal.md` - Chosen approach
+
 - [ ] Read `rapidspec/changes/<change-id>/tasks.md` - Implementation plan
+
 - [ ] Read `rapidspec/changes/<change-id>/design.md` - Architecture (if exists)
+
 - [ ] Read `rapidspec/changes/<change-id>/investigation.md` - Context (if exists)
+
 - [ ] List all tasks with current status
 
 ### 1.5 Architecture Validation (Before Implementation)
@@ -120,25 +126,39 @@ Design feedback here prevents mid-implementation pivots that waste time.
 **Run design agents based on proposal content:**
 
   - Provide concrete implementation guidance
+
   - Validate RLS policies before writing SQL
+
   - Confirm index strategy matches query patterns
+
   - Review migration safety (CONCURRENTLY, non-blocking)
+
   - Check rollback plan exists
 
 **If Next.js/React changes (check proposal.md for components, routes):**
+
 - Task nextjs-architecture-expert(components, routes, proposal_context)
+
   - Guide Server/Client Component decisions per file
+
   - Review data fetching approach (fetch, use, parallel)
+
   - Validate file structure and naming
+
   - Check async params/searchParams usage
+
   - Suggest loading and error boundaries
 
 **Architecture Validation Checklist:**
 
 After agents complete:
+
 - [ ] Implementation approach confirmed
+
 - [ ] Potential pitfalls identified
+
 - [ ] Concrete guidance received for complex tasks
+
 - [ ] Ready to start Task 1.1 with confidence
 
 **Example Architecture Validation:**
@@ -154,8 +174,11 @@ Running architecture validation...
 Reviewing migration plan...
 ✓ Migration approach: CREATE UNIQUE INDEX CONCURRENTLY - correct
 💡 Concrete guidance:
+
   1. Create index first (can run while app is live)
+
   2. Add constraint second (requires index to exist)
+
   3. Order matters: index → constraint, not constraint → index
 ⚠️ Don't forget: Add IF NOT EXISTS for idempotency
 ✓ RLS: Policy using has_role('user') - validated
@@ -166,8 +189,11 @@ Reviewing component structure...
 ✓ Server Component for SmartLinksPage - correct
 ✓ Client Component for DuplicateToast - minimal, appropriate
 💡 Implementation guidance:
+
   1. Create toast.tsx as "use client" first
+
   2. Import into page.tsx (Server Component)
+
   3. Pass error from Server Action as prop
 ⚠️ Watch out: Don't use useFormStatus in Server Component
 ✓ Loading: loading.tsx pattern suggested - add to tasks
@@ -176,8 +202,11 @@ Ready to implement with guidance ✓
 ```
 
 **When to skip:**
+
 - Skip if proposal already has detailed design review
+
 - Skip for minor changes (typo fixes, copy updates)
+
 - Skip if confident in straightforward implementation
 
 ### 2. Execute Tasks One by One (Checkpoint-Based)
@@ -189,38 +218,65 @@ This allows user to test and change direction at any point.
 </thinking>
 
 **Per-Task Flow:**
+
 1. **Announce**: "Starting Task 1.1: [Name] (X min)"
+
 2. **Show Context**: Read actual files, check git history
+
 3. **Propose Changes**: Show diff with Before (actual) → After (proposed)
+
 4. **Wait for Approval**: "Ready to implement? (yes to proceed)"
+
 5. **Implement**: Create/modify files with verified changes
+
 6. **Update tasks.md**: Mark task as complete by changing `- [ ]` to `- [x]`.
+
 7. **Checkpoint**: "✅ Task 1.1 complete - Test this? (yes to continue)"
 
 3. **Handle Direction Changes**
+
    - If user says "wait", "no", or "stop":
+
      1. Stop immediately
+
      2. Ask: "What should I change?"
+
      3. Revise current step
+
      4. Show new diff
+
      5. Wait for approval again
+
    - Update tasks.md to reflect approach changes
 
 4. **Verification Before Changes**
+
    - Before touching any file:
+
      1. Read the actual file
+
      2. Show current code (with @file:line)
+
      3. Show proposed changes
+
      4. Show diff (+ Added, - Removed, ~ Modified)
+
      5. Wait for approval to proceed
+
    - **NEVER** modify files without showing diffs first
 
 5. **Complete Implementation**
+
    - After all tasks complete, show summary:
+
      - Files changed
+
      - Migrations created
+
      - Tests added
+
    - Suggest: `/rapidspec.review` for quality, security, architecture review
+
    - Suggest: `/rapidspec.commit` to create commit with conventional format
 
 **Task Structure**
@@ -230,13 +286,19 @@ tasks.md format:
 ## 1. Implementation
 
 ### 1.1 [Step Name] (X min) - Checkpoint ⏸
+
 - [ ] [specific task]
+
 - [ ] [specific task]
+
 **Checkpoint:** User can test here
 
 ### 1.2 [Next Step] (Y min) - Checkpoint ⏸
+
 - [ ] [specific task]
+
 - [ ] Add E2E test for [feature]
+
 **Checkpoint:** User can test here
 ```
 
@@ -251,8 +313,11 @@ AI reads spec:
 ✓ tasks.md: 3 tasks (15 min total)
 
 AI lists tasks:
+
 1.1 Add Suspense boundary (5 min)
+
 1.2 Create loading.tsx (5 min)
+
 1.3 Test loading state (5 min)
 
 AI: "Ready to proceed?"
@@ -285,6 +350,7 @@ AI: "Task 1.1: Install p-limit"
 AI: "Understood. Changing approach..."
 
 - Benefit: Built-in mutex (no p-limit needed)
+
 - Breaking: Update client.ts required
 
 AI: "Proceed with upgrade?"
@@ -301,7 +367,9 @@ Reading @src/app/api/route.ts...
 ⚠️  Found: Validation already exists at line 89!
 
 Options:
+
 1. Use existing validation (faster)
+
 2. Replace existing (cleaner)
 
 AI: "Which? (1 or 2)"
@@ -328,7 +396,9 @@ If tests fail:
 ❌ E2E test failed: Expected 400, got 409
 
 Fix options:
+
 1. Change API to return 400 (as spec'd)
+
 2. Update test to expect 409
 
 Which? (1 or 2)
@@ -364,9 +434,13 @@ Good: "Stopped. What should I change?"
 ```
 
 **Reference**
+
 - User tests frequently - expect pauses
+
 - Show diffs for every file change
+
 - One task at a time, one checkpoint at a time
+
 - After complete, suggest `/rapidspec.review` for quality check
 
 <!-- SPECKIT.SPEC:END -->

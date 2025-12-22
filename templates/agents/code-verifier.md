@@ -63,10 +63,15 @@ fi
 ```text
 
 **Key Steps**:
+
 1. For each component mentioned in spec.md, find actual file
+
 2. Use Glob and Read to verify paths exist
+
 3. Extract code snippets (first 50 lines or relevant section)
+
 4. Document exact file paths
+
 5. Note if files are missing, renamed, or moved
 
 ### 3. Detect Framework & Tech Stack
@@ -260,6 +265,7 @@ grep -E "^import|^from|^require" <file> | grep -v node_modules
 - axios
 
 **Dependency Depth**: 3 levels
+
 **Circular Dependencies**: None detected
 
 ```text
@@ -319,11 +325,17 @@ Analyze for potential breaking changes:
 ```text
 
 **Detection Steps**:
+
 1. For each file, note current versions
+
 2. Check if spec.md suggests version upgrades
+
 3. Identify breaking API changes
+
 4. Note database migration requirements
+
 5. Check authentication/authorization impacts
+
 6. Identify compatibility issues
 
 **Output Example**:
@@ -471,6 +483,7 @@ Recent Commits:
 - axios 1.5.0
 
 **Depth**: 3 levels
+
 **Circular Dependencies**: None
 
 [Continue for each component...]
@@ -546,8 +559,11 @@ Recent Commits:
 ## Verification Confidence
 
 **File Path Verification**: ✅ 95% (all referenced files found)
+
 **Framework Detection**: ✅ 95% (versions extracted from package.json)
+
 **Git History**: ✅ 100% (from git log)
+
 **Breaking Changes**: ⚠️ 85% (identified known breaking changes)
 
 ---

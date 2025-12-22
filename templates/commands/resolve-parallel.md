@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, parallel, implementation]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 argument-hint: <change-id>
+
 ---
 
 <!-- RAPIDSPEC:START -->
@@ -34,9 +35,13 @@ Some tasks are completely independent and can run in parallel.
 </thinking>
 
 **Immediate Actions:**
+
 - [ ] Read `rapidspec/changes/<change-id>/tasks.md`
+
 - [ ] Identify uncompleted tasks (marked with `- [ ]`)
+
 - [ ] Extract task descriptions, sections, and checkpoints
+
 - [ ] Count total uncompleted tasks
 
 ### 2. Dependency Analysis
@@ -51,28 +56,41 @@ Independent tasks can run in parallel for speed.
 **Dependency Rules:**
 
 1. **File Dependencies**
+
    - If Task A and Task B modify the same file → Sequential
+
    - If Task A creates file that Task B uses → Sequential (A before B)
 
 2. **Logical Dependencies**
+
    - If Task B description mentions Task A → Sequential (A before B)
+
    - If Task requires "after X" → Sequential
 
 3. **Section Dependencies**
+
    - Critical fixes (Section 0) → Run first
+
    - Implementation sections → Can often run in parallel
+
    - Testing/Validation → Usually run after implementation
 
 4. **Database Dependencies**
+
    - Migrations must run in order
+
    - Schema changes before queries using new schema
 
 **Dependency Detection:**
 
 Check each task for:
+
 - File references: `src/app/api/route.ts`
+
 - "After Task X.Y" mentions
+
 - "Depends on" explicit markers
+
 - Logical flow (migration → RLS → queries)
 
 ### 3. Create Execution Plan
@@ -122,17 +140,23 @@ Total Tasks: 6 uncompleted
 Execution Waves: 3
 
 Wave 1 (Parallel - 3 tasks):
+
   - Task 0.1: Enable RLS on smart_links table (20 min)
+
   - Task 1.1: Add duplicate validation (15 min)
+
   - Task 2.1: Create DuplicateToast component (10 min)
   → Est. Time: 20 min (longest task)
 
 Wave 2 (Parallel - 2 tasks) - Depends on Wave 1:
+
   - Task 1.2: Test validation logic (10 min)
+
   - Task 2.2: Add loading state to page (5 min)
   → Est. Time: 10 min
 
 Wave 3 (Sequential - 1 task) - Depends on Wave 2:
+
   - Task 3.1: E2E test for duplicate prevention (15 min)
   → Est. Time: 15 min
 
@@ -158,7 +182,9 @@ Update tasks.md after each wave completion.
 Launching Wave 1 (3 tasks in parallel)...
 
 1. Task pr-comment-resolver(task_0_1_enable_rls)
+
 2. Task pr-comment-resolver(task_1_1_add_validation)
+
 3. Task pr-comment-resolver(task_2_1_create_component)
 
 → Waiting for all 3 agents to complete...
@@ -174,8 +200,11 @@ Results:
   ✓ Task 2.2: DuplicateToast component created
 
 Updated tasks.md:
+
   - [x] Task 0.1
+
   - [x] Task 1.1
+
   - [x] Task 2.1
 
 Files changed: 4 files
@@ -207,12 +236,17 @@ Location: src/lib/validation.ts:45
 Details: Property 'release_id' does not exist on type 'SmartLink'
 
 Impact:
+
   - Task 1.2 (Test validation) → BLOCKED
+
   - Task 3.1 (E2E tests) → BLOCKED
 
 Options:
+
 1. fix-now - Stop and fix this task immediately
+
 2. skip - Mark as failed, continue with independent tasks
+
 3. abort - Stop all parallel execution
 
 What to do?
@@ -247,9 +281,13 @@ Updated: rapidspec/changes/<change-id>/tasks.md
 All tasks marked [x] completed
 
 Next Steps:
+
 1. Review changes: git diff
+
 2. Run full test suite: npm test
+
 3. Review implementation: /rapidspec.review <change-id>
+
 4. Commit changes: /rapidspec.commit <change-id>
 ```
 
@@ -258,14 +296,17 @@ Next Steps:
 **For each task, use the appropriate resolver agent:**
 
 **Code changes:**
+
 - Task pr-comment-resolver - General code fixes and improvements
 
 **Database changes:**
 
 **Component/UI changes:**
+
 - Task nextjs-architecture-expert - Components, routes, layouts
 
 **Complex refactoring:**
+
 - Use general-purpose agent for multi-step changes
 
 ## Examples
@@ -288,11 +329,15 @@ Analyzing dependencies...
 Execution Plan:
 
 Wave 1 (2 tasks in parallel):
+
   - Task 1.1: Create validation (15 min)
+
   - Task 2.1: Create component (10 min)
 
 Wave 2 (2 tasks in parallel):
+
   - Task 1.2: Test validation (5 min)
+
   - Task 2.2: Add loading state (5 min)
 
 Total: 30 min (vs 35 min sequential)
@@ -303,7 +348,9 @@ You: "yes"
 
 AI:
 Launching Wave 1...
+
 1. Task pr-comment-resolver(task_1_1)
+
 2. Task pr-comment-resolver(task_2_1)
 
 [Both agents work in parallel]
@@ -313,7 +360,9 @@ Launching Wave 1...
 ✓ Task 2.1: Component created
 
 Launching Wave 2...
+
 1. Task pr-comment-resolver(task_1_2)
+
 2. Task pr-comment-resolver(task_2_2)
 
 ✅ Wave 2 Complete (2/2)
@@ -377,8 +426,11 @@ Wave 1 launched...
 Impact: Task 1.2 and Task 2.1 blocked
 
 Options:
+
 1. fix-now - Stop and fix this task immediately
+
 2. skip (continue with 0.2 only)
+
 3. abort - Stop all parallel execution
 
 What to do?
@@ -411,9 +463,13 @@ Good: Migration fails → Stop dependent tasks → Fix → Resume
 ## Reference
 
 - Use after `/rapidspec.triage` to fix multiple accepted findings efficiently
+
 - Use during `/rapidspec.apply` for large features with many independent tasks
+
 - Dependency analysis prevents breaking changes
+
 - Parallel execution saves significant time (30-50% faster)
+
 - Always update tasks.md after each wave completion
 
 <!-- RAPIDSPEC:END -->

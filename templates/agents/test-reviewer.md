@@ -119,7 +119,9 @@ Review test quality, ensuring meaningful tests, proper coverage, reliability, an
 ## Recommendations
 
 1. [Add tests for function X]
+
 2. [Fix flaky test in Y]
+
 3. [Improve coverage in Z]
 
 ```text

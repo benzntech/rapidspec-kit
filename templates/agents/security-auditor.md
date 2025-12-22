@@ -618,6 +618,7 @@ Check:
 ### Finding: SQL Injection Vulnerability
 
 **File**: src/api/users.ts
+
 **Lines**: 42-48
 
 **Issue**:
@@ -645,6 +646,7 @@ Parameterized queries prevent SQL injection attacks.
 ### Finding: Hardcoded API Key
 
 **File**: src/config/stripe.ts
+
 **Lines**: 5
 
 **Issue**:
@@ -689,11 +691,17 @@ Hardcoded secrets can be compromised and should never be in code.
 ## Recommendations
 
 1. Fix all critical issues before merging
+
 2. Address SQL injection immediately
+
 3. Remove hardcoded credentials
+
 4. Update vulnerable dependencies
+
 5. Add rate limiting to auth endpoints
+
 6. Implement security logging
+
 7. Add CSRF tokens to forms
 
 ```text

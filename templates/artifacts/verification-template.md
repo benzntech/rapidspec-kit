@@ -181,6 +181,7 @@ f2e1d9c - Add rate limiting to auth routes (1 week ago)
 ```text
 
 **Dependency Depth**: 3 levels
+
 **Circular Dependencies**: None detected ✅
 
 ---
@@ -209,6 +210,7 @@ f2e1d9c - Add rate limiting to auth routes (1 week ago)
 ```text
 
 **Dependency Depth**: 2 levels
+
 **Circular Dependencies**: None detected ✅
 
 ---

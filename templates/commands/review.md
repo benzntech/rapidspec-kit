@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, review, quality]
 allowed-tools: Read, Bash, Grep, Glob, Task
 argument-hint: <change-id>
+
 ---
 
 <!-- RAPIDSPEC:START -->
@@ -41,8 +42,11 @@ Agents need context to provide relevant feedback.
 **Immediate Actions:**
 
 - [ ] Read `rapidspec/changes/<change-id>/proposal.md` - What was planned
+
 - [ ] Read `rapidspec/changes/<change-id>/tasks.md` - What tasks were defined
+
 - [ ] Run `git diff` - What was actually implemented
+
 - [ ] Compare implementation against proposed changes
 
 ### 2. Detect Project Type
@@ -57,15 +61,21 @@ This informs which agents to run for maximum relevance.
 Check for these indicators:
 
 **Next.js Project**:
+
 - `package.json` with `"next"` dependency
+
 - `app/` or `pages/` directory
+
 - `next.config.js`
+
 - `.tsx` or `.ts` files
 
 - `.sql` migration files
 
 **TypeScript Project**:
+
 - `tsconfig.json`
+
 - `.ts` or `.tsx` files
 
 Based on detection, include project-specific reviewers in parallel execution.
@@ -83,7 +93,9 @@ Detect what changed (DB, UI, API) and run relevant specialized agents in paralle
 <parallel_tasks>
 
 **Core Agents (always run in parallel)**:
+
 1. Task code-verifier(change_files, proposal_context)
+
 2. Task security-auditor(change_files, migration_files)
 
 **Conditional Agents (run based on changes)**:
@@ -92,6 +104,7 @@ Detect changes and run relevant agents in parallel:
 
 ```bash
 # Check what changed
+
 HAS_COMPONENT_CHANGES=$(git diff --name-only | grep -E "\.tsx|\.jsx|components/")
 HAS_TEST_CHANGES=$(git diff --name-only | grep -E "\.test\.|\.spec\.|e2e/")
 HAS_API_CHANGES=$(git diff --name-only | grep -E "api/|app/.*route\.ts")
@@ -100,21 +113,29 @@ HAS_API_CHANGES=$(git diff --name-only | grep -E "api/|app/.*route\.ts")
 Then run in parallel based on detection:
 
 **If database changes** (`HAS_DB_CHANGES`):
+
 - Task data-integrity-guardian(migration_files)
+
 - [database-architect moved to /rapidspec.proposal Design Review and /rapidspec.apply Architecture Validation]
 
 **If component changes** (`HAS_COMPONENT_CHANGES`):
+
 - Task code-reviewer(component_files)
+
 - [nextjs-architecture-expert moved to /rapidspec.proposal Design Review and /rapidspec.apply Architecture Validation]
 
 **If test changes or new features** (`HAS_TEST_CHANGES` or user-facing):
+
 - Task test-automator(test_files, change_files)
 
 **If API changes** (`HAS_API_CHANGES`):
+
 - Task performance-oracle(api_files)
 
 **Optional (run if explicitly requested)**:
+
 - Task git-history-analyzer(change_files) - Historical context
+
 - Task pr-comment-resolver(change_files) - If resolving PR comments
 
 </parallel_tasks>
@@ -122,31 +143,51 @@ Then run in parallel based on detection:
 **Agent Responsibilities:**
 
 **@agent-code-verifier**: Prevents "imaginary code"
+
 - ✓ Files read before modification
+
 - ✓ Patterns verified with Grep
+
 - ✓ Git history checked
+
 - ✓ Diffs shown for changes
 
 **@agent-security-auditor**: Security & RLS compliance
+
 - ✓ Policies use `has_role()` function
+
 - ✓ Input validation present
+
 - ✓ Auth token handling secure
+
 - ✓ No SQL injection vulnerabilities
+
 - ✓ OWASP Top 10 compliance
 
 **@agent-code-reviewer**: Code quality
+
 - Type safety (no unjustified `any`)
+
 - React/Next.js best practices
+
 - Performance (no O(n²), proper pagination)
+
 - Error handling present
+
 - Code complexity (cognitive <10)
+
 - Testing coverage
 
 **@agent-data-integrity-guardian**: Data integrity & safety
+
 - Migration execution safety (non-blocking)
+
 - Data consistency checks
+
 - Constraint validation
+
 - Index coverage for queries
+
 - No data loss risks
 
 **Note:** Architecture agents (@agent-nextjs-architecture-expert, @agent-database-architect)
@@ -154,27 +195,43 @@ now run during /rapidspec.proposal (Design Review) and /rapidspec.apply (Archite
 to catch design issues before implementation starts.
 
 **@agent-test-automator**: Test coverage
+
 - E2E tests present (Playwright)
+
 - Unit tests present (Vitest)
+
 - Edge cases covered
+
 - Coverage target 80%+
 
 **@agent-performance-oracle**: Performance checks
+
 - No O(n²) algorithms
+
 - Proper pagination
+
 - Bundle size impact
+
 - Render performance
+
 - Database query optimization
 
 **@agent-architecture-strategist**: Architecture alignment
+
 - Component structure
+
 - Data flow patterns
+
 - Separation of concerns
+
 - Scalability considerations
 
 **@agent-git-history-analyzer**: Historical context
+
 - Consistency with past patterns
+
 - Breaking change awareness
+
 - Contributor expertise
 
 ### 4. Synthesize Findings
@@ -188,26 +245,38 @@ Provide actionable fix suggestions with code examples.
 <ultrathink_instruction>
 Spend maximum cognitive effort synthesizing agent findings.
 Look for:
+
 - Common themes across multiple agents
+
 - Conflicting recommendations (resolve based on project context)
+
 - Critical issues that must block commit
+
 - Quick wins that provide high value
 </ultrathink_instruction>
 
 **Synthesis Process:**
 
 1. **Group by Severity**
+
    - ❌ Critical: Security, type errors, broken functionality
+
    - ⚠️ Warning: Complexity, missing tests, performance
+
    - 💡 Info: Refactoring, micro-optimizations
 
 2. **Identify Patterns**
+
    - Multiple agents flagging same issue = high priority
+
    - Isolated findings = lower priority
 
 3. **Provide Fixes**
+
    - Include code examples for each issue
+
    - Link to relevant documentation
+
    - Estimate fix time
 
 ### 5. Generate Report
@@ -245,7 +314,9 @@ Offer to fix warnings automatically.
 ╚═════════════════════════════════════════╝
 
 Summary:
+
 - ✅ Critical checks: All passed
+
 - ⚠️ Warnings: 1 (database optimization)
 
 Fix warnings? (yes to fix, skip to ignore)
@@ -260,32 +331,51 @@ Critical issues MUST be fixed before commit.
 </thinking>
 
 **User responses:**
+
 - "yes" or "fix" → Implement fixes automatically
+
 - "skip" or "ignore" → Track warnings but don't block
+
 - User may say "wait" (wait) to review warnings first
 
 ## Severity Levels
 
 **❌ Critical (Blocks commit)**
+
 - Security issues (missing RLS, SQL injection)
+
 - Type errors without justification
+
 - Broken functionality (API errors, crashes)
+
 - Async APIs not awaited (Next.js 16)
+
 - Migration without rollback
+
 - No authentication on protected routes
 
 **⚠️ Warning (Should fix)**
+
 - High complexity functions (cognitive >10)
+
 - Missing indexes on foreign keys
+
 - Low test coverage (<80%)
+
 - Unnecessary Client Components
+
 - Missing error handling
+
 - Performance issues (O(n²))
 
 **💡 Info (Nice to have)**
+
 - Refactoring opportunities
+
 - Performance micro-optimizations
+
 - Additional comments
+
 - Better variable names
 
 ## Examples
@@ -417,14 +507,21 @@ Fix now? (yes to fix)
 ## When to Run
 
 **Recommended:**
+
 - After `/rapidspec.apply` completes all tasks
+
 - Before `/rapidspec.commit` to catch issues early
+
 - Any time: "review this" or "check quality"
+
 - After major changes
 
 **Can skip:**
+
 - Minor changes (typo, doc update)
+
 - Confident in implementation
+
 - Tight iteration loop
 
 ## Workflow Integration
@@ -476,20 +573,31 @@ Good: yes to fix → Resolve all critical → Then commit
 ## Reference
 
 - Review is optional but recommended
+
 - Always run after major changes
+
 - Critical issues block commits
+
 - Warnings tracked but don't block
+
 - User can choose to fix warnings, skip them, or wait to review first
+
 - After review, suggest `/rapidspec.commit` or fix issues
+
 - Parallel agents = faster reviews (3-6 agents based on changes)
 
 ## Notes
 
 - **Core agents always run** (2): code-verifier, security-auditor
+
 - **Conditional agents run based on changes** (2-6 more): Detect what changed and run relevant reviewers
+
 - **Parallel execution** for speed: All selected agents run simultaneously
+
 - **Synthesize findings** across all agents to identify patterns
+
 - **Provide actionable fixes** with code examples
+
 - **Typical review runs 3-6 agents** (not all 11), keeping it fast and relevant
 
 <!-- RAPIDSPEC:END -->

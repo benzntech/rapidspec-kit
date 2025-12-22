@@ -5,6 +5,7 @@ category: RapidSpec
 tags: [rapidspec, archive]
 allowed-tools: Read, Write, Edit, Bash, Task
 argument-hint: <change-id>
+
 ---
 
 <!-- SPECKIT.SPEC:START -->
@@ -33,14 +34,18 @@ For full archive with spec delta merging to canonical specs, use this slash comm
 **Basic archive with CLI (no spec merging):**
 ```bash
 # Simple timestamp + move to archive
+
 rapidspec archive <change-id>
 
 # Skip validation check
+
 rapidspec archive <change-id> --skip-validation
 ```
 
 **This CLI command only:**
+
 - Checks task completion (warns if incomplete)
+
 - Moves to archive directory
 
 **For full spec delta merging and validation, continue with Main Tasks below.**
@@ -56,9 +61,13 @@ Abort if any critical items incomplete.
 </thinking>
 
 **Completion checklist:**
+
    - Check all tasks in tasks.md marked `[x]`
+
    - Verify code committed to git
+
    - Ensure tests passing
+
    - If incomplete, list remaining tasks and abort
 
 ### 2. Archive with Timestamp
@@ -68,7 +77,9 @@ This preserves history while clearing active changes directory.
 </thinking>
 
 **Actions:**
+
    - Move `rapidspec/changes/<change-id>/` → `rapidspec/changes/archive/<timestamp>-<change-id>/`
+
    - Example: `20251111123045-prevent-duplicate-smartlinks`
 
 ### 3. Merge Spec Deltas
@@ -80,12 +91,19 @@ Preserve RapidSpec format and structure.
 </thinking>
 
 **Delta merge process:**
+
    - Read all `specs/<capability>/spec.md` in change folder
+
    - Apply deltas to canonical specs in `rapidspec/specs/`:
+
      - **ADDED** → Add requirement to canonical spec
+
      - **MODIFIED** → Replace existing requirement in canonical
+
      - **REMOVED** → Delete from canonical spec
+
      - **RENAMED** → Rename requirement in canonical
+
    - Preserve requirement format and scenario structure
 
 ### 4. Validate Strictly
@@ -99,8 +117,11 @@ Rollback if validation fails to prevent broken specs.
    ```bash
    rapidspec validate --strict
    ```
+
    - Ensure no errors in canonical specs
+
    - If errors found, rollback and fix
+
    - Optionally run: `Task code-verifier` for deep validation
 
 
@@ -132,7 +153,9 @@ Running: rapidspec validate --strict
 Done! Change archived successfully.
 
 Summary:
+
 - Archive: archive/20251111123045-prevent-duplicate-smartlinks/
+
 - Specs updated: smart-links
 ```
 
@@ -146,13 +169,17 @@ AI checks:
 ⚠️  Tasks incomplete (4/6 completed)
 
 Remaining tasks:
+
 - [ ] Task 2.2: Add error handling for mutex timeout
+
 - [ ] Task 3.1: Update docs with new auth flow
 
 Cannot archive: 2 tasks incomplete
 
 Options:
+
 1. Complete remaining tasks first
+
 2. Archive with incomplete tasks (not recommended)
 
 Which? (1 or 2)
@@ -175,14 +202,18 @@ Merging spec deltas...
 
 Validating...
 ❌ Error in rapidspec/specs/auth/spec.md:
+
   - Line 42: Scenario missing WHEN clause
 
 Rolling back...
 ✓ Restored from archive
 
 Fix validation errors first:
+
 1. Review: rapidspec/specs/auth/spec.md
+
 2. Add missing WHEN clause
+
 3. Retry: /rapidspec.archive add-feature
 ```
 
@@ -210,9 +241,13 @@ Good: Merge deltas → Validate strictly → Fix errors
 ```
 
 ## Reference
+
 - Archive path: `rapidspec/changes/archive/<timestamp>-<change-id>/`
+
 - Canonical specs: `rapidspec/specs/<capability>/spec.md`
+
 - Validate command: `rapidspec validate --strict`
+
 - User says "yes" (proceed), "wait" (wait) if issues found
 
 <!-- SPECKIT.SPEC:END -->

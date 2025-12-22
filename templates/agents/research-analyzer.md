@@ -145,12 +145,19 @@ From research, extract the key factors that should drive the decision:
 ## Key Decision Factors
 
 1. **Time Constraint**: [Is speed of implementation critical per research?]
+
 2. **Team Expertise**: [What technologies does team know per research context?]
+
 3. **Scalability Needs**: [What scale requirements from research?]
+
 4. **Maintenance Burden**: [What's acceptable per context?]
+
 5. **Community Support**: [Which approaches have strong communities per research?]
+
 6. **Security Requirements**: [What security level needed per research?]
+
 7. **Performance Targets**: [What performance targets per research?]
+
 8. **Cost/Resources**: [Budget or resource constraints implied?]
 
 ```text
@@ -215,16 +222,23 @@ Provide a comprehensive analysis that option-generator can use:
 ## Viable Implementation Approaches Identified
 
 1. **Approach A: [Name]**
+
    - Key characteristics: [From research.md]
+
    - Where found in research: [Specific section/reference]
+
    - Strengths per research: [List from research]
+
    - Weaknesses per research: [List from research]
+
    - When this is recommended: [From research]
 
 2. **Approach B: [Name]**
+
    - [Same structure]
 
 3. **Approach C: [Name]**
+
    - [Same structure]
 
 ---
@@ -276,6 +290,7 @@ Provide a comprehensive analysis that option-generator can use:
 ## Recommendation for Option-Generator
 
 Focus on these 3 approaches because:
+
 1. [Reason - from research]
 
 2. [Reason - from research]
@@ -359,12 +374,17 @@ Not all research findings are equally important. Highlight:
 ## Viable Approaches Identified
 
 1. **Serverless Functions**
+
    - Key characteristics: Event-driven, auto-scaling, stateless
+
    - Where found: Reference implementations section, 3 examples
+
    - Strengths: Excellent scalability (research found 100x auto-scale),
      Low ops burden (no servers to manage per AWS case study)
+
    - Weaknesses: Cold start latency (research found 100-500ms first call),
      Complex debugging (research noted challenges in monitoring)
+
    - When recommended: Short-lived tasks, variable load (research finding)
 
 ```text
@@ -376,9 +396,13 @@ Not all research findings are equally important. Highlight:
 ## Viable Approaches Identified
 
 1. **Serverless Functions**
+
    - Key characteristics: Awesome, modern, everyone uses it
+
    - Where found: Internet (not specific)
+
    - Strengths: Great, scalable, easy
+
    - Weaknesses: Sometimes slow
 
 ```text
