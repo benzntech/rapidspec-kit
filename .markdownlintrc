@@ -1,0 +1,24 @@
+{
+  "default": true,
+  "MD022": false,
+  "MD031": false,
+  "MD032": false,
+  "MD033": {
+    "allowed_html": [
+      "div",
+      "span",
+      "img",
+      "a",
+      "p",
+      "h1",
+      "h2",
+      "h3",
+      "table",
+      "tr",
+      "td",
+      "th"
+    ]
+  },
+  "MD040": false,
+  "no-hard-tabs": false
+}
