@@ -1,6 +1,6 @@
 <div align="center">
-    <img src="./media/logo_large.webp" alt="RapidRapidSpec-Kit Logo" width="200" height="200"/>
-    <h1>🌱 RapidRapidSpec-Kit</h1>
+    <img src="./media/logo_large.webp" alt="RapidSpec-Kit Logo" width="200" height="200"/>
+    <h1>🌱 RapidSpec-Kit</h1>
     <h3><em>Build high-quality software faster with complete automation.</em></h3>
 </div>
 
