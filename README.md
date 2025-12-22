@@ -1,15 +1,15 @@
 <div align="center">
     <img src="./media/logo_large.webp" alt="RapidSpec-Kit Logo" width="200" height="200"/>
     <h1>🌱 RapidSpec-Kit</h1>
-    <h3><em>Build high-quality software faster with complete automation.</em></h3>
+    <h3><em>Build high-quality software faster.</em></h3>
 </div>
 
 <p align="center">
-    <strong>An open source fork of RapidSpec-Kit with 100% RapidSpec automation parity. A comprehensive toolkit that allows you to focus on product scenarios and predictable outcomes with AI-driven feature development from specification through deployment.</strong>
+    <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.</strong>
 </p>
 
 <p align="center">
-    <a href="https://github.com/benzntech/rapidspec-kit/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/benzntech/rapidspec-kit/release.yml?branch=main&label=Build" alt="Build Status"/></a>
+    <a href="https://github.com/benzntech/rapidspec-kit/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/benzntech/rapidspec-kit/release.yml?branch=main&label=Build" alt="Build"/></a>
     <a href="https://github.com/benzntech/rapidspec-kit/stargazers"><img src="https://img.shields.io/github/stars/benzntech/rapidspec-kit?style=social" alt="GitHub stars"/></a>
     <a href="https://github.com/benzntech/rapidspec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/benzntech/rapidspec-kit" alt="License"/></a>
     <a href="https://github.com/benzntech/rapidspec-kit"><img src="https://img.shields.io/badge/repo-RapidSpec--Kit-blue" alt="Repository"/></a>
@@ -20,36 +20,20 @@
 ## Table of Contents
 
 - [🤔 What is Spec-Driven Development?](#-what-is-spec-driven-development)
-
 - [⚡ Get Started](#-get-started)
-
-- [🤖 Supported AI Agents](#supported-ai-agents)
-
-- [🔧 Specify CLI Reference](#rapidspec-cli-reference)
-
-- [📚 Core Philosophy](#core-philosophy)
-
-- [🌟 Development Phases](#development-phases)
-
-- [🎯 Experimental Goals](#experimental-goals)
-
-- [🔧 Prerequisites](#prerequisites)
-
-- [📖 Learn More](#learn-more)
-
-- [📋 Detailed Process](#detailed-process)
-
-- [🔍 Troubleshooting](#troubleshooting)
-
-- [👥 Maintainers](#maintainers)
-
-- [💬 Support](#support)
-
-- [🙏 Acknowledgements](#acknowledgements)
-
-- [📄 License](#license)
-
-**For a complete reference of all commands available in your AI tool**, see [TOOLS.md](./TOOLS.md) - comprehensive guide for all AI coding agents (Claude Code, Gemini CLI, Cursor, Copilot, Windsurf, Qwen, and more).
+- [🤖 Supported AI Agents](#-supported-ai-agents)
+- [🔧 Specify CLI Reference](#-specify-cli-reference)
+- [📚 Core Philosophy](#-core-philosophy)
+- [🌟 Development Phases](#-development-phases)
+- [🎯 Experimental Goals](#-experimental-goals)
+- [🔧 Prerequisites](#-prerequisites)
+- [📖 Learn More](#-learn-more)
+- [📋 Detailed Process](#-detailed-process)
+- [🔍 Troubleshooting](#-troubleshooting)
+- [👥 Maintainers](#-maintainers)
+- [💬 Support](#-support)
+- [🙏 Acknowledgements](#-acknowledgements)
+- [📄 License](#-license)
 
 ## 🤔 What is Spec-Driven Development?
 
@@ -77,7 +61,6 @@ rapidspec init <PROJECT_NAME>
 
 # Or initialize in existing project
 rapidspec init . --ai claude
-
 # or
 rapidspec init --here --ai claude
 
@@ -102,11 +85,8 @@ uvx --from git+https://github.com/benzntech/rapidspec-kit.git rapidspec init <PR
 **Benefits of persistent installation:**
 
 - Tool stays installed and available in PATH
-
 - No need to create shell aliases
-
 - Better tool management with `uv tool list`, `uv tool upgrade`, `uv tool uninstall`
-
 - Cleaner shell configuration
 
 ### 2. Establish project principles
@@ -135,53 +115,28 @@ Use the **`/rapidspec.plan`** command to provide your tech stack and architectur
 /rapidspec.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
 ```
 
-### 4. Follow the complete 9-phase automation workflow
+### 5. Break down into tasks
 
-The new RapidRapidSpec-Kit includes a complete automated workflow. After creating your specification and plan, follow these phases:
+Use **`/rapidspec.tasks`** to create an actionable task list from your implementation plan.
 
 ```bash
-
-# Phase 3: Research tech stack options
-
-/rapidspec.research
-
-# Phase 4: Verify existing code (if brownfield)
-
-/rapidspec.verify
-
-# Phase 5: Generate implementation approaches
-
-/rapidspec.options
-
-# Phase 6: Create tasks from plan
-
 /rapidspec.tasks
-
-# Phase 7: Apply implementation with checkpoints
-
-/rapidspec.apply
-
-# Phase 8: Quality review
-
-/rapidspec.review
-
-# Phase 9: Create commits and PR
-
-/rapidspec.commit
-
-# Phase 10: Archive and deploy
-
-/rapidspec.archive
-
 ```
 
-For detailed step-by-step instructions, see our [comprehensive guide](./TOOLS.md) or [spec-driven.md](./spec-driven.md).
+### 6. Execute implementation
+
+Use **`/rapidspec.implement`** to execute all tasks and build your feature according to the plan.
+
+```bash
+/rapidspec.implement
+```
+
+For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
 
 ## 🤖 Supported AI Agents
 
 | Agent                                                                                | Support | Notes                                                                                                                                     |
 | ------------------------------------------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-
 | [Qoder CLI](https://qoder.com/cli)                                                   | ✅      |                                                                                                                                           |
 | [Amazon Q Developer CLI](https://aws.amazon.com/developer/learning/q-developer-cli/) | ⚠️      | Amazon Q Developer CLI [does not support](https://github.com/aws/amazon-q-developer-cli/issues/3064) custom arguments for slash commands. |
 | [Amp](https://ampcode.com/)                                                          | ✅      |                                                                                                                                           |
@@ -203,21 +158,19 @@ For detailed step-by-step instructions, see our [comprehensive guide](./TOOLS.md
 
 ## 🔧 Specify CLI Reference
 
-The `specify` command supports the following options:
+The `rapidspec` command supports the following options:
 
 ### Commands
 
 | Command | Description                                                                                                                                             |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-
-| `init`  | Initialize a new Specify project from the latest template                                                                                               |
+| `init`  | Initialize a new RapidSpec project from the latest template                                                                                            |
 | `check` | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `windsurf`, `qwen`, `opencode`, `codex`, `shai`, `qoder`) |
 
 ### `rapidspec init` Arguments & Options
 
 | Argument/Option        | Type     | Description                                                                                                                                                                                  |
 | ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-
 | `<project-name>`       | Argument | Name for your new project directory (optional if using `--here`, or use `.` for current directory)                                                                                           |
 | `--ai`                 | Option   | AI assistant to use: `claude`, `gemini`, `copilot`, `cursor-agent`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, `roo`, `codebuddy`, `amp`, `shai`, `q`, `bob`, or `qoder` |
 | `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                                                                                                                                  |
@@ -232,316 +185,78 @@ The `specify` command supports the following options:
 ### Examples
 
 ```bash
-
 # Basic project initialization
-
 rapidspec init my-project
 
 # Initialize with specific AI assistant
-
 rapidspec init my-project --ai claude
-
-# Initialize with Cursor support
-
-rapidspec init my-project --ai cursor-agent
-
-# Initialize with Qoder support
-
-rapidspec init my-project --ai qoder
-
-# Initialize with Windsurf support
-
-rapidspec init my-project --ai windsurf
-
-# Initialize with Amp support
-
-rapidspec init my-project --ai amp
-
-# Initialize with SHAI support
-
-rapidspec init my-project --ai shai
-
-# Initialize with IBM Bob support
-
-rapidspec init my-project --ai bob
-
-# Initialize with PowerShell scripts (Windows/cross-platform)
-
-rapidspec init my-project --ai copilot --script ps
+rapidspec init my-project --ai gemini
+rapidspec init my-project --ai copilot
 
 # Initialize in current directory
-
 rapidspec init . --ai copilot
-
 # or use the --here flag
-
 rapidspec init --here --ai copilot
 
 # Force merge into current (non-empty) directory without confirmation
-
 rapidspec init . --force --ai copilot
-
 # or
-
 rapidspec init --here --force --ai copilot
 
 # Skip git initialization
-
 rapidspec init my-project --ai gemini --no-git
 
 # Enable debug output for troubleshooting
-
 rapidspec init my-project --ai claude --debug
 
 # Use GitHub token for API requests (helpful for corporate environments)
-
 rapidspec init my-project --ai claude --github-token ghp_your_token_here
 
 # Check system requirements
-
 rapidspec check
-
 ```
 
 ### Available Slash Commands
 
-After running `rapidspec init`, your AI coding agent will have access to these slash commands for structured development. The workflow is organized into **6 integrated phases** for full end-to-end automation:
+After running `rapidspec init`, your AI coding agent will have access to these slash commands for structured development:
 
-#### 🔄 Full 6-Phase Automation Workflow
+#### Core Commands
 
-Complete feature development automation with AI-driven decision making at each stage:
+Essential commands for the Spec-Driven Development workflow:
 
-| Phase | Command                 | Purpose                                                                                                                                    |
-| ----- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Command                    | Description                                                              |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `/rapidspec.constitution`  | Create or update project governing principles and development guidelines |
+| `/rapidspec.specify`       | Define what you want to build (requirements and user stories)            |
+| `/rapidspec.plan`          | Create technical implementation plans with your chosen tech stack        |
+| `/rapidspec.tasks`         | Generate actionable task lists for implementation                        |
+| `/rapidspec.implement`     | Execute all tasks to build the feature according to the plan             |
 
-| **1** | `/rapidspec.specify`      | Define what you want to build (requirements and user stories)                                                                             |
+#### Optional Commands
 
-| **2** | `/rapidspec.research`     | Conduct web research and gather evidence for technical decisions                                                                          |
+Additional commands for enhanced quality and validation:
 
-| **3** | `/rapidspec.verify`       | Verify actual code exists, detect frameworks, analyze git history, identify breaking changes and risks                                    |
-
-| **4** | `/rapidspec.options`      | AI-generated approach options with trade-off analysis and recommendations                                                                 |
-
-| **5** | `/rapidspec.plan`         | Create technical implementation plans with your chosen tech stack and generate actionable task lists                                     |
-
-| **6** | `/rapidspec.apply`        | Checkpoint-based code application with before→after diffs, user approval at each step, real-time task tracking                          |
-
-| **7** | `/rapidspec.review`       | Multi-agent quality review (security audit, architecture review, code quality, database, API, components, tests)                        |
-
-| **8** | `/rapidspec.commit`       | Git integration: verify changes, generate conventional commits, create pull requests with auto-description                              |
-
-| **9** | `/rapidspec.archive`      | Archive completed work, merge specs to canonical location, close issues, prepare for deployment                                         |
-
-#### 🛠️ Setup & Configuration Commands
-
-Foundation commands for project initialization:
-
-| Command                 | Description                                                              |
-| ----------------------- | ------------------------------------------------------------------------ |
-
-| `/rapidspec.constitution` | Create or update project governing principles and development guidelines |
-| `/rapidspec.tasks`        | Generate actionable task lists (generated automatically by `/rapidspec.plan`) |
-
-#### 📊 6-Phase Workflow Details
-
-**Phase 1: Specification** (`/rapidspec.specify`)
-
-- Define requirements and user stories
-
-- Focus on *what* and *why*, not tech stack
-
-- Creates: `spec.md`
-
-**Phase 2: Research** (`/rapidspec.research`)
-
-- Automated web research for tech stack decisions
-
-- Parallel agent execution for speed
-
-- Gathers evidence for informed decisions
-
-- Creates: `research.md`
-
-**Phase 3: Verification** (`/rapidspec.verify`)
-
-- Verify actual code files exist (prevents hallucinations)
-
-- Detect frameworks and versions from config files
-
-- Analyze git history for context
-
-- Identify breaking changes and risks
-
-- Creates: `verification.md`
-
-**Phase 4: Options & Planning** (`/rapidspec.options` → `/rapidspec.plan`)
-
-- AI generates 2-3 distinct implementation approaches
-
-- Trade-off analysis with pros/cons
-
-- AI recommends best option
-
-- User can override recommendation
-
-- Technical planning with chosen stack
-
-- Creates: `options.md`, `plan.md`, `tasks.md`
-
-**Phase 5: Application** (`/rapidspec.apply`)
-
-- Implement tasks one at a time with checkpoints
-
-- Show before→after code diffs for every change
-
-- User approves each change before implementation
-
-- Real-time task tracking (`[ ]` → `[x]`)
-
-- Can pause, test, and continue
-
-- Updates: `tasks.md` with completion timestamps
-
-**Phase 6: Quality Review** (`/rapidspec.review`)
-
-- Parallel core agents: code reviewer, security auditor, architecture strategist
-
-- Conditional agents based on changes: database, API, components, tests
-
-- Severity-based findings: Critical ❌, Warning ⚠️, Info 💡
-
-- Creates: `review.md`
-
-**Phase 7: Git & Commits** (`/rapidspec.commit`)
-
-- Verify git changes match completed tasks
-
-- Generate conventional commits (feat, fix, refactor, docs, test, chore)
-
-- Create pull request with auto-generated description
-
-- Link to tasks and issues
-
-- Creates: git commits + pull request
-
-**Phase 8: Archive & Deploy** (`/rapidspec.archive`)
-
-- Validate all tasks complete and review passed
-
-- Archive feature artifacts with metadata
-
-- Merge specs to canonical location
-
-- Close related GitHub issues
-
-- Delete feature branch
-
-- Creates: specs/archive/ directory with manifest
-
-### 🎯 Key Features
-
-- **Evidence-Based**: All recommendations grounded in research findings
-
-- **Verification-First**: Prevents "imaginary code" hallucinations
-
-- **Checkpoint Safety**: User approval required at critical points
-
-- **Parallel Execution**: Multiple agents run simultaneously for speed
-
-- **Before→After Diffs**: Shows exact code changes before applying
-
-- **Task Tracking**: Real-time updates to task completion status
-
-- **Multi-Agent Review**: Specialized agents for different change types
-
-- **Conventional Commits**: Semantic versioning-compatible commits
-
-- **Auto-Documentation**: PRs auto-generated from completed work
-
-### ⚡ Quick Start
-
-```bash
-
-# 1. Establish project principles
-
-/rapidspec.constitution Create principles focused on code quality and testing
-
-# 2. Define what to build
-
-/rapidspec.specify Build a photo album organizer with drag-and-drop support
-
-# 3. Research tech stack options
-
-/rapidspec.research
-
-# 4. Verify existing code (if brownfield)
-
-/rapidspec.verify
-
-# 5. Generate and choose implementation approach
-
-/rapidspec.options
-
-# Review options and let AI recommend the best approach
-
-# 6. Create technical plan and tasks
-
-/rapidspec.plan Use React with TypeScript and Tailwind CSS
-
-# 7. Apply implementation with checkpoints
-
-/rapidspec.apply
-
-# Approve each change as it's shown with before→after diffs
-
-# 8. Quality review
-
-/rapidspec.review
-
-# Multi-agent review for security, architecture, code quality
-
-# 9. Create git commits and PR
-
-/rapidspec.commit
-
-# Auto-generates conventional commits and pull request
-
-# 10. Archive and deploy
-
-/rapidspec.archive
-
-# Archive artifacts and merge to canonical specs
-
-```
-
-### Environment Variables
-
-| Variable          | Description                                                                                                                                                                                                                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-
-| `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>\*\*Must be set in the context of the agent you're working with prior to using `/rapidspec.plan` or follow-up commands. |
+| Command              | Description                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `/rapidspec.clarify` | Clarify underspecified areas (recommended before `/rapidspec.plan`)                                                                   |
+| `/rapidspec.analyze` | Cross-artifact consistency & coverage analysis (run after `/rapidspec.tasks`, before `/rapidspec.implement`)                        |
+| `/rapidspec.review`  | Comprehensive agent reviews (optional) - quality review after implementation                                                         |
 
 ## 📚 Core Philosophy
 
 Spec-Driven Development is a structured process that emphasizes:
 
 - **Intent-driven development** where specifications define the "*what*" before the "*how*"
-
 - **Rich specification creation** using guardrails and organizational principles
-
 - **Multi-step refinement** rather than one-shot code generation from prompts
-
 - **Heavy reliance** on advanced AI model capabilities for specification interpretation
 
 ## 🌟 Development Phases
 
 | Phase                                    | Focus                    | Key Activities                                                                                                                                                     |
 | ---------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-
 | **0-to-1 Development** ("Greenfield")    | Generate from scratch    | <ul><li>Start with high-level requirements</li><li>Generate specifications</li><li>Plan implementation steps</li><li>Build production-ready applications</li></ul> |
-
 | **Creative Exploration**                 | Parallel implementations | <ul><li>Explore diverse solutions</li><li>Support multiple technology stacks & architectures</li><li>Experiment with UX patterns</li></ul>                         |
-
 | **Iterative Enhancement** ("Brownfield") | Brownfield modernization | <ul><li>Add features iteratively</li><li>Modernize legacy systems</li><li>Adapt processes</li></ul>                                                                |
 
 ## 🎯 Experimental Goals
@@ -551,42 +266,31 @@ Our research and experimentation focus on:
 ### Technology independence
 
 - Create applications using diverse technology stacks
-
 - Validate the hypothesis that Spec-Driven Development is a process not tied to specific technologies, programming languages, or frameworks
 
 ### Enterprise constraints
 
 - Demonstrate mission-critical application development
-
 - Incorporate organizational constraints (cloud providers, tech stacks, engineering practices)
-
 - Support enterprise design systems and compliance requirements
 
 ### User-centric development
 
 - Build applications for different user cohorts and preferences
-
 - Support various development approaches (from vibe-coding to AI-native development)
 
 ### Creative & iterative processes
 
 - Validate the concept of parallel implementation exploration
-
 - Provide robust iterative feature development workflows
-
 - Extend processes to handle upgrades and modernization tasks
 
 ## 🔧 Prerequisites
 
 - **Linux/macOS/Windows**
-
-
 - [Supported](#-supported-ai-agents) AI coding agent.
-
 - [uv](https://docs.astral.sh/uv/) for package management
-
 - [Python 3.11+](https://www.python.org/downloads/)
-
 - [Git](https://git-scm.com/downloads)
 
 If you encounter issues with an agent, please open an issue so we can refine the integration.
@@ -594,7 +298,6 @@ If you encounter issues with an agent, please open an issue so we can refine the
 ## 📖 Learn More
 
 - **[Complete Spec-Driven Development Methodology](./spec-driven.md)** - Deep dive into the full process
-
 - **[Detailed Walkthrough](#-detailed-process)** - Step-by-step implementation guide
 
 ---
@@ -606,64 +309,50 @@ If you encounter issues with an agent, please open an issue so we can refine the
 
 You can use the Specify CLI to bootstrap your project, which will bring in the required artifacts in your environment. Run:
 
-```
+```bash
 rapidspec init <project_name>
 ```
 
 Or initialize in the current directory:
 
-```
-
+```bash
 rapidspec init .
-
 # or use the --here flag
-
 rapidspec init --here
-
 # Skip confirmation when the directory already has files
-
 rapidspec init . --force
-
 # or
-
 rapidspec init --here --force
-
 ```
 
 ![Specify CLI bootstrapping a new project in the terminal](./media/specify_cli.gif)
 
 You will be prompted to select the AI agent you are using. You can also proactively specify it directly in the terminal:
 
-```
-
+```bash
 rapidspec init <project_name> --ai claude
 rapidspec init <project_name> --ai gemini
 rapidspec init <project_name> --ai copilot
 
 # Or in current directory:
-
 rapidspec init . --ai claude
 rapidspec init . --ai codex
 
 # or use --here flag
-
 rapidspec init --here --ai claude
 rapidspec init --here --ai codex
 
 # Force merge into a non-empty current directory
-
 rapidspec init . --force --ai claude
 
 # or
-
 rapidspec init --here --force --ai claude
-
 ```
+
 The CLI will check if you have Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, Codex CLI, Qoder CLI, or Amazon Q Developer CLI installed. If you do not, or you prefer to get the templates without checking for the right tools, use `--ignore-agent-tools` with your command:
-```
 
+```bash
 rapidspec init <project_name> --ai claude --ignore-agent-tools
-
 ```
 
 ### **STEP 1:** Establish project principles
@@ -716,190 +405,9 @@ Once this step is completed, you should have a new branch created (e.g., `001-cr
 
 The produced specification should contain a set of user stories and functional requirements, as defined in the template.
 
-At this stage, your project folder contents should resemble the following:
+### **STEP 3:** Have Claude Code validate the plan
 
-```
-└── .specify
-    ├── memory
-    │  └── constitution.md
-    ├── scripts
-    │  ├── check-prerequisites.sh
-    │  ├── common.sh
-    │  ├── create-new-feature.sh
-    │  ├── setup-plan.sh
-    │  └── update-claude-md.sh
-    ├── specs
-    │  └── 001-create-taskify
-    │      └── spec.md
-    └── templates
-        ├── plan-template.md
-        ├── spec-template.md
-        └── tasks-template.md
-```
-
-### **STEP 3:** Functional specification clarification (required before planning)
-
-With the baseline specification created, you can go ahead and clarify any of the requirements that were not captured properly within the first shot attempt.
-
-You should run the structured clarification workflow **before** creating a technical plan to reduce rework downstream.
-
-Preferred order:
-
-1. Use `/rapidspec.clarify` (structured) – sequential, coverage-based questioning that records answers in a Clarifications section.
-2. Optionally follow up with ad-hoc free-form refinement if something still feels vague.
-
-If you intentionally want to skip clarification (e.g., spike or exploratory prototype), explicitly state that so the agent doesn't block on missing clarifications.
-
-Example free-form refinement prompt (after `/rapidspec.clarify` if still needed):
-
-```
-For each sample project or project that you create there should be a variable number of tasks between 5 and 15
-tasks for each one randomly distributed into different states of completion. Make sure that there's at least
-one task in each stage of completion.
-```
-
-You should also ask Claude Code to validate the **Review & Acceptance Checklist**, checking off the things that are validated/pass the requirements, and leave the ones that are not unchecked. The following prompt can be used:
-
-```
-Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
-```
-
-It's important to use the interaction with Claude Code as an opportunity to clarify and ask questions around the specification - **do not treat its first attempt as final**.
-
-### **STEP 4:** Generate a plan
-
-You can now be specific about the tech stack and other technical requirements. You can use the `/rapidspec.plan` command that is built into the project template with a prompt like this:
-
-```
-We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use
-Blazor server with drag-and-drop task boards, real-time updates. There should be a REST API created with a projects API,
-tasks API, and a notifications API.
-```
-
-The output of this step will include a number of implementation detail documents, with your directory tree resembling this:
-
-```
-.
-├── CLAUDE.md
-├── memory
-│  └── constitution.md
-├── scripts
-│  ├── check-prerequisites.sh
-│  ├── common.sh
-│  ├── create-new-feature.sh
-│  ├── setup-plan.sh
-│  └── update-claude-md.sh
-├── specs
-│  └── 001-create-taskify
-│      ├── contracts
-│      │  ├── api-spec.json
-│      │  └── signalr-spec.md
-│      ├── data-model.md
-│      ├── plan.md
-│      ├── quickstart.md
-│      ├── research.md
-│      └── spec.md
-└── templates
-    ├── CLAUDE-template.md
-    ├── plan-template.md
-    ├── spec-template.md
-    └── tasks-template.md
-```
-
-Check the `research.md` document to ensure that the right tech stack is used, based on your instructions. You can ask Claude Code to refine it if any of the components stand out, or even have it check the locally-installed version of the platform/framework you want to use (e.g., .NET).
-
-Additionally, you might want to ask Claude Code to research details about the chosen tech stack if it's something that is rapidly changing (e.g., .NET Aspire, JS frameworks), with a prompt like this:
-
-```
-I want you to go through the implementation plan and implementation details, looking for areas that could
-benefit from additional research as .NET Aspire is a rapidly changing library. For those areas that you identify that
-require further research, I want you to update the research document with additional details about the specific
-versions that we are going to be using in this Taskify application and spawn parallel research tasks to clarify
-any details using research from the web.
-```
-
-During this process, you might find that Claude Code gets stuck researching the wrong thing - you can help nudge it in the right direction with a prompt like this:
-
-```
-I think we need to break this down into a series of steps. First, identify a list of tasks
-that you would need to do during implementation that you're not sure of or would benefit
-from further research. Write down a list of those tasks. And then for each one of these tasks,
-I want you to spin up a separate research task so that the net results is we are researching
-all of those very specific tasks in parallel. What I saw you doing was it looks like you were
-researching .NET Aspire in general and I don't think that's gonna do much for us in this case.
-That's way too untargeted research. The research needs to help you solve a specific targeted question.
-```
-
-> [!NOTE]
-> Claude Code might be over-eager and add components that you did not ask for. Ask it to clarify the rationale and the source of the change.
-
-### **STEP 5:** Have Claude Code validate the plan
-
-With the plan in place, you should have Claude Code run through it to make sure that there are no missing pieces. You can use a prompt like this:
-
-```
-Now I want you to go and audit the implementation plan and the implementation detail files.
-Read through it with an eye on determining whether or not there is a sequence of tasks that you need
-to be doing that are obvious from reading this. Because I don't know if there's enough here. For example,
-when I look at the core implementation, it would be useful to reference the appropriate places in the implementation
-details where it can find the information as it walks through each step in the core implementation or in the refinement.
-```
-
-This helps refine the implementation plan and helps you avoid potential blind spots that Claude Code missed in its planning cycle. Once the initial refinement pass is complete, ask Claude Code to go through the checklist once more before you can get to the implementation.
-
-You can also ask Claude Code (if you have the [GitHub CLI](https://docs.github.com/en/github-cli/github-cli) installed) to go ahead and create a pull request from your current branch to `main` with a detailed description, to make sure that the effort is properly tracked.
-
-> [!NOTE]
-> Before you have the agent implement it, it's also worth prompting Claude Code to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask Claude Code to resolve them. Ensure that Claude Code follows the [constitution](base/memory/constitution.md) as the foundational piece that it must adhere to when establishing the plan.
-
-### **STEP 6:** Generate task breakdown with /rapidspec.tasks
-
-With the implementation plan validated, you can now break down the plan into specific, actionable tasks that can be executed in the correct order. Use the `/rapidspec.tasks` command to automatically generate a detailed task breakdown from your implementation plan:
-
-```bash
-/rapidspec.tasks
-```
-
-This step creates a `tasks.md` file in your feature specification directory that contains:
-
-- **Task breakdown organized by user story** - Each user story becomes a separate implementation phase with its own set of tasks
-
-- **Dependency management** - Tasks are ordered to respect dependencies between components (e.g., models before services, services before endpoints)
-
-- **Parallel execution markers** - Tasks that can run in parallel are marked with `[P]` to optimize development workflow
-
-- **File path specifications** - Each task includes the exact file paths where implementation should occur
-
-- **Test-driven development structure** - If tests are requested, test tasks are included and ordered to be written before implementation
-
-- **Checkpoint validation** - Each user story phase includes checkpoints to validate independent functionality
-
-The generated tasks.md provides a clear roadmap for the `/rapidspec.implement` command, ensuring systematic implementation that maintains code quality and allows for incremental delivery of user stories.
-
-### **STEP 7:** Implementation
-
-Once ready, use the `/rapidspec.implement` command to execute your implementation plan:
-
-```bash
-/rapidspec.implement
-```
-
-The `/rapidspec.implement` command will:
-
-- Validate that all prerequisites are in place (constitution, spec, plan, and tasks)
-
-- Parse the task breakdown from `tasks.md`
-
-- Execute tasks in the correct order, respecting dependencies and parallel execution markers
-
-- Follow the TDD approach defined in your task plan
-
-- Provide progress updates and handle errors appropriately
-
-> [!IMPORTANT]
-> The AI agent will execute local CLI commands (such as `dotnet`, `npm`, etc.) - make sure you have the required tools installed on your machine.
-
-Once the implementation is complete, test the application and resolve any runtime errors that may not be visible in CLI logs (e.g., browser console errors). You can copy and paste such errors back to your AI agent for resolution.
+With the plan in place, you should have Claude Code run through it to make sure that there are no missing pieces.
 
 </details>
 
@@ -926,19 +434,12 @@ rm gcm-linux_amd64.2.6.1.deb
 
 ## 👥 Maintainers
 
-### Upstream Maintainers (Original RapidSpec-Kit)
-
 - Den Delimarsky ([@localden](https://github.com/localden))
-
 - John Lam ([@jflam](https://github.com/jflam))
-
-**Note**: This repository (RapidRapidSpec-Kit) is a fork of the original [github/spec-kit](https://github.com/github/spec-kit) with 100% RapidSpec automation parity implementation. All core commands and agents have been implemented for complete end-to-end feature development automation. Maintained at [@benzntech/rapidspec-kit](https://github.com/benzntech/rapidspec-kit).
 
 ## 💬 Support
 
-For support on **RapidRapidSpec-Kit**, please open a [GitHub issue](https://github.com/benzntech/rapidspec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development with complete automation.
-
-For issues with the original **RapidSpec-Kit**, visit [github/spec-kit](https://github.com/github/spec-kit/issues/new).
+For support, please open a [GitHub issue](https://github.com/benzntech/rapidspec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
 
 ## 🙏 Acknowledgements
 
