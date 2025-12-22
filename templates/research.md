@@ -15,17 +15,20 @@
 [Relevant documentation from frameworks being used]
 
 ### [Framework Name] (e.g., Next.js, React, Supabase)
+
 - Documentation: [link]
 - Relevant patterns: [description]
 - Version considerations: [notes]
 
 ### API References
+
 - [API/Library]: [relevant documentation and examples]
 
 ## Reference Implementations
 [Links to reference repositories and their approaches]
 
 ### Similar Features in Other Projects
+
 1. **[Project Name]** ([link])
    - Approach: [description]
    - Pros: [benefits]
@@ -39,13 +42,16 @@
    - Applicability: [how relevant to this project]
 
 ## Security & Performance Considerations
+
 [Research findings related to security and performance]
 
 ### Security
+
 - [Consideration 1]
 - [Consideration 2]
 
 ### Performance
+
 - [Consideration 1]
 - [Consideration 2]
 
