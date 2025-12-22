@@ -1,0 +1,14 @@
+{
+    "chat.promptFilesRecommendations": {
+        "rapidspec.constitution": true,
+        "rapidspec.specify": true,
+        "rapidspec.plan": true,
+        "rapidspec.tasks": true,
+        "rapidspec.implement": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        ".rapidspec/scripts/bash/": true,
+        ".rapidspec/scripts/powershell/": true
+    }
+}
+
