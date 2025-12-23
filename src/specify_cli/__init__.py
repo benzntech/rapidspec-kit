@@ -1220,22 +1220,22 @@ def init(
 
     steps_lines.append(f"{step_num}. Start using slash commands with your AI agent:")
 
-    steps_lines.append("   2.1 [cyan]/rapidspec.constitution[/] - Establish project principles")
-    steps_lines.append("   2.2 [cyan]/rapidspec.specify[/] - Create baseline specification")
-    steps_lines.append("   2.3 [cyan]/rapidspec.plan[/] - Create implementation plan")
-    steps_lines.append("   2.4 [cyan]/rapidspec.tasks[/] - Generate actionable tasks")
-    steps_lines.append("   2.5 [cyan]/rapidspec.implement[/] - Execute implementation")
+    steps_lines.append("   2.1 [cyan]/rapidspec.proposal[/] - Create feature proposal with research & alternatives")
+    steps_lines.append("   2.2 [cyan]/rapidspec.review[/] - Review code changes for quality & safety")
+    steps_lines.append("   2.3 [cyan]/rapidspec.apply[/] - Apply proposed changes to codebase")
+    steps_lines.append("   2.4 [cyan]/rapidspec.commit[/] - Generate commit with verification")
+    steps_lines.append("   2.5 [cyan]/rapidspec.triage[/] - Categorize and prioritize issues")
 
     steps_panel = Panel("\n".join(steps_lines), title="Next Steps", border_style="cyan", padding=(1,2))
     console.print()
     console.print(steps_panel)
 
     enhancement_lines = [
-        "Optional commands that you can use for your specs [bright_black](improve quality & confidence)[/bright_black]",
+        "Additional commands for the spec-driven workflow [bright_black](expand your capabilities)[/bright_black]",
         "",
-        f"○ [cyan]/rapidspec.clarify[/] [bright_black](optional)[/bright_black] - Ask structured questions to de-risk ambiguous areas before planning (run before [cyan]/rapidspec.plan[/] if used)",
-        f"○ [cyan]/rapidspec.analyze[/] [bright_black](optional)[/bright_black] - Cross-artifact consistency & alignment report (after [cyan]/rapidspec.tasks[/], before [cyan]/rapidspec.implement[/])",
-        f"○ [cyan]/rapidspec.checklist[/] [bright_black](optional)[/bright_black] - Generate quality checklists to validate requirements completeness, clarity, and consistency (after [cyan]/rapidspec.plan[/])"
+        f"○ [cyan]/rapidspec.archive[/] [bright_black](optional)[/bright_black] - Archive completed features for historical tracking",
+        f"○ [cyan]/rapidspec.resolve-parallel[/] [bright_black](optional)[/bright_black] - Handle parallel feature development conflicts",
+        f"○ [cyan]/rapidspec.finalize[/] [bright_black](optional)[/bright_black] - Prepare release and deployment"
     ]
     enhancements_panel = Panel("\n".join(enhancement_lines), title="Enhancement Commands", border_style="cyan", padding=(1,2))
     console.print()
