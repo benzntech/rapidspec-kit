@@ -163,7 +163,17 @@ build_variant() {
     esac
   fi
 
-  [[ -d templates ]] && { mkdir -p "$SPEC_DIR/templates"; find templates -type f -not -path "templates/commands/*" -not -name "vscode-settings.json" -exec cp --parents {} "$SPEC_DIR"/ \; ; echo "Copied templates -> .rapidspec/templates"; }
+  [[ -d templates ]] && {
+    mkdir -p "$SPEC_DIR/templates"
+    # Copy templates while preserving directory structure
+    # Exclude commands/* directory (processed separately) and vscode-settings.json
+    for f in $(find templates -type f -not -path "templates/commands/*" -not -name "vscode-settings.json"); do
+      dest="$SPEC_DIR/$f"
+      mkdir -p "$(dirname "$dest")"
+      cp "$f" "$dest"
+    done
+    echo "Copied templates -> .rapidspec/templates"
+  }
   
   # NOTE: We substitute {ARGS} internally. Outward tokens differ intentionally:
   #   * Markdown/prompt (claude, copilot, cursor-agent, opencode): $ARGUMENTS
