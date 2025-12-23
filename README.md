@@ -242,6 +242,15 @@ Additional commands for enhanced quality and validation:
 | `/rapidspec.analyze` | Cross-artifact consistency & coverage analysis (run after `/rapidspec.tasks`, before `/rapidspec.implement`)                        |
 | `/rapidspec.review`  | Comprehensive agent reviews (optional) - quality review after implementation                                                         |
 
+#### Memory Bank Commands (v0.2.0+)
+
+Project context tracking and decision logging:
+
+| Command              | Description                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `/rapidspec.constitution` | Initialize and manage project memory bank with intelligent analysis                                                               |
+| `/rapidspec.umb`     | Update memory bank during development sessions to track decisions and progress                                                       |
+
 ## 📚 Core Philosophy
 
 Spec-Driven Development is a structured process that emphasizes:
@@ -410,6 +419,75 @@ The produced specification should contain a set of user stories and functional r
 With the plan in place, you should have Claude Code run through it to make sure that there are no missing pieces.
 
 </details>
+
+---
+
+## 💾 Project Memory Bank (v0.2.0+)
+
+RapidSpec includes an integrated project memory bank system to track decisions, patterns, and progress across development sessions.
+
+### What is a Memory Bank?
+
+A memory bank is a collection of 6 markdown files (stored in `.rapidspec/memory/`) that maintains project-level context:
+
+- **productContext.md** - Project overview, architecture, tech stack
+- **activeContext.md** - Current work, objectives, blockers, next steps
+- **systemPatterns.md** - Coding patterns, architectural patterns, anti-patterns to avoid
+- **decisionLog.md** - Technical decisions with rationale and implications
+- **progress.md** - Work tracking, completed features, planned work
+- **constitution.md** - Project governance and principles
+
+### Initialize Memory Bank
+
+Create a memory bank for your project:
+
+```bash
+/rapidspec.constitution
+```
+
+This automatically:
+- Analyzes your codebase structure
+- Detects your tech stack
+- Reviews git history for past decisions
+- Initializes memory bank files with context
+
+### Track Work and Decisions
+
+During development, the memory bank auto-tracks:
+
+**Automatically (no flags):**
+- Work committed with `/rapidspec.commit`
+- Features archived with `/rapidspec.archive`
+
+**Optionally (with flags):**
+```bash
+# Log proposal decisions and research
+/rapidspec.proposal --update-memory "Feature name"
+
+# Track implementation progress
+/rapidspec.apply change-id --track-progress
+
+# Log review findings and patterns
+/rapidspec.review change-id --log-findings
+
+# Manual updates anytime
+/rapidspec.umb "Decision made: chose JWT for authentication"
+```
+
+### Benefits
+
+✅ **Knowledge Retention** - Decisions and patterns persist across sessions
+✅ **Team Onboarding** - New members understand project context
+✅ **Decision History** - Why were decisions made? Review the decision log
+✅ **Pattern Documentation** - Consistent coding and architectural patterns
+✅ **Work Tracking** - Complete history of features, bug fixes, and technical improvements
+
+### Learn More
+
+For comprehensive documentation:
+- **Integration details**: See `MEMORY_BANK_INTEGRATION.md`
+- **User guide**: See `docs/memory-bank.md`
+- **AI agent instructions**: See `AGENTS.md` (Memory Bank Integration section)
 
 ---
 

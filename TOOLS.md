@@ -680,6 +680,100 @@ These commands work with:
 
 ---
 
+## 💾 Memory Bank Commands (v0.2.0+)
+
+RapidSpec includes integrated memory bank system for tracking project context and decisions.
+
+### Memory Bank Initialization
+
+**Command**: `/rapidspec.constitution`
+
+Initialize and manage project memory bank with intelligent analysis.
+
+**What it does**:
+1. Creates `.rapidspec/memory/` directory with 6 files
+2. Analyzes your codebase (tech stack, structure, patterns)
+3. Reviews git history for decisions
+4. Auto-populates context files
+5. Sets up governance and principles
+
+**When to use**: Start of project, after major architecture changes
+**Output**: 6 memory bank files (productContext, activeContext, systemPatterns, decisionLog, progress, constitution)
+
+**Example**:
+```text
+/rapidspec.constitution Create memory bank for Next.js e-commerce platform
+```
+
+---
+
+### Memory Bank Session Updates
+
+**Command**: `/rapidspec.umb`
+
+Update memory bank during development sessions.
+
+**What it does**:
+1. Analyzes recent work and decisions
+2. Updates memory bank files with:
+   - Decisions made (decisionLog.md)
+   - Work completed (progress.md)
+   - Current focus and blockers (activeContext.md)
+   - Patterns identified (systemPatterns.md)
+3. Maintains timestamps for audit trail
+
+**When to use**: End of work session, after decisions made, when resuming work
+**Input**: Summary of work done or decisions made (optional)
+
+**Examples**:
+```text
+/rapidspec.umb
+# Updates memory with all session changes
+
+/rapidspec.umb Completed auth refactor, implemented JWT tokens
+# Updates memory with specific context
+
+/rapidspec.umb Decision: Use cursor-based pagination for better performance
+# Records specific decision
+```
+
+---
+
+## Memory Bank Files Reference
+
+The memory bank creates 6 files in `.rapidspec/memory/`:
+
+| File | Purpose | Auto-Updated | Updated By |
+|------|---------|--------------|-----------|
+| **constitution.md** | Project governance and principles | No | Manual or `/rapidspec.constitution` |
+| **productContext.md** | Project scope, architecture, tech stack | Partial | `/rapidspec.constitution`, `/rapidspec.umb` |
+| **activeContext.md** | Current work, objectives, blockers | Yes | Commands (`commit`, `archive`, `apply`, etc.) |
+| **systemPatterns.md** | Coding and architecture patterns | Yes | `/rapidspec.review`, `/rapidspec.umb` |
+| **decisionLog.md** | Technical decisions with rationale | Yes | `/rapidspec.proposal`, `/rapidspec.commit`, `/rapidspec.umb` |
+| **progress.md** | Work tracking, completed features | Yes | `/rapidspec.commit`, `/rapidspec.archive`, `/rapidspec.umb` |
+
+---
+
+## Memory Bank Integration with Commands
+
+Commands support optional memory bank integration:
+
+### Automatic Logging (No Flags)
+- **`/rapidspec.commit`** - Auto-logs committed work
+- **`/rapidspec.archive`** - Auto-logs completed features
+
+### Optional Logging (with Flags)
+- **`/rapidspec.proposal --update-memory`** - Log decision analysis
+- **`/rapidspec.apply --track-progress`** - Update at checkpoint intervals
+- **`/rapidspec.review --log-findings`** - Record findings and patterns
+- **`/rapidspec.triage --log-triage`** - Log priority decisions
+- **`/rapidspec.resolve-parallel --track-waves`** - Log wave progress
+
+### Manual Logging
+- **`/rapidspec.umb [description]`** - Manual memory updates anytime
+
+---
+
 ## ❓ FAQ
 
 **Q: What's the difference between /rapidspec.plan and /rapidspec.apply?**

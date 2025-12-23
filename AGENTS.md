@@ -429,6 +429,174 @@ See `agents/` directory for full list and documentation.
 
 ---
 
+## Memory Bank Integration (v0.2.0+)
+
+RapidSpec includes an optional memory bank system to track project context, decisions, and progress across development sessions.
+
+### What is the Memory Bank?
+
+A hybrid system of 6 markdown files (`.rapidspec/memory/`) that tracks:
+- **productContext.md** - Project scope, architecture, tech stack
+- **activeContext.md** - Current work, objectives, blockers, next steps
+- **systemPatterns.md** - Coding patterns, architectural patterns, anti-patterns
+- **decisionLog.md** - Technical decisions with rationale and implications
+- **progress.md** - Work status, completed features, planned work
+- **constitution.md** - Project governance and principles
+
+### Initialize Memory Bank
+
+```bash
+# Initialize memory bank for first time
+/rapidspec.constitution
+
+# Updates memory with project analysis
+# Creates .rapidspec/memory/ directory
+# Auto-populates from codebase
+```
+
+### Memory Bank During Development
+
+**Optional - with flags (default: prompt user):**
+```bash
+# Log decisions during proposal
+/rapidspec.proposal --update-memory "Feature name"
+
+# Track progress during implementation
+/rapidspec.apply change-id --track-progress
+
+# Log review findings
+/rapidspec.review change-id --log-findings
+
+# Log triage decisions
+/rapidspec.triage change-id --log-triage
+
+# Log parallel resolution
+/rapidspec.resolve-parallel change-id --track-waves
+```
+
+**Automatic - always logs (no flags):**
+```bash
+# Automatically logs work completion
+/rapidspec.commit "commit message"
+
+# Automatically logs feature completion
+/rapidspec.archive change-id
+```
+
+### Update Memory Manually
+
+```bash
+# Update memory bank directly anytime
+/rapidspec.umb "Summary of work done, decisions made, or context to record"
+
+# Examples:
+/rapidspec.umb "Completed auth refactor, implemented JWT tokens"
+/rapidspec.umb "Decision: Use cursor-based pagination for better performance"
+/rapidspec.umb "Pattern: All form validation uses Zod schema + client error handling"
+```
+
+### Use Cases
+
+**For Teams:**
+- Knowledge sharing across team members
+- Onboarding new developers
+- Documentation of decisions and rationale
+- Context for code reviews
+
+**For Individuals:**
+- Context resumption across sessions
+- Decision history and rationale
+- Pattern documentation
+- Work tracking and retrospectives
+
+**For Solo Developers:**
+- Long-term project context
+- Preventing "why did I decide this?" confusion
+- Gradual knowledge base building
+
+### Adoption Options
+
+**Option 1: Start Simple**
+- Just initialize with `/rapidspec.constitution`
+- Use `/rapidspec.umb` manually when you want to record something
+- No flags, no automation - pure manual
+
+**Option 2: Strategic Hooks**
+- Enable flags on key commands: `--update-memory`, `--log-findings`, `--log-triage`
+- Commits and archives auto-log (always on)
+- Gives you coverage of major decisions and completions
+
+**Option 3: Full Automation**
+- Set `--auto` flag on optional commands
+- Everything gets logged automatically
+- Most comprehensive tracking
+
+### Memory Bank Examples
+
+**Proposal with memory logging:**
+```bash
+/rapidspec.proposal --update-memory "add-oauth2-authentication"
+
+# Logged to memory:
+# - Decision: Chose JWT + refresh tokens (rationale documented)
+# - Options: Considered session-based, OAuth providers
+# - Context: Research findings from best practices
+```
+
+**Implementation with progress tracking:**
+```bash
+/rapidspec.apply add-oauth2-authentication --track-progress
+
+# At checkpoint 5, 10, 15, 20:
+# - Tasks completed: [...list...]
+# - Current focus: [...next task...]
+# - Blockers: [...if any...]
+```
+
+**Commit (auto-logged):**
+```bash
+/rapidspec.commit "feat: implement OAuth2 authentication"
+
+# Auto-logged to memory:
+# - Commit hash and message
+# - Tasks completed
+# - Files modified
+# - Time: [timestamp]
+```
+
+**Archive (auto-logged):**
+```bash
+/rapidspec.archive add-oauth2-authentication
+
+# Auto-logged to memory:
+# - Feature completion
+# - Specs merged
+# - Lessons learned
+# - Archive timestamp
+```
+
+### Memory Bank Best Practices
+
+✅ **Do:**
+- Initialize memory bank at project start
+- Log major decisions with `/rapidspec.umb`
+- Enable `--update-memory` for complex features
+- Review memory bank periodically to track patterns
+- Use memory bank for onboarding new team members
+
+❌ **Don't:**
+- Manually edit memory bank files (use `/rapidspec.umb` instead)
+- Treat memory bank as source of truth (git is)
+- Skip memory updates for simple bug fixes
+- Enable full automation if you value performance (minimal but non-zero overhead)
+
+### Memory Bank Reference
+
+For detailed integration information, see: **MEMORY_BANK_INTEGRATION.md**
+For user guide, see: **MEMORY_BANK_USER_GUIDE.md** (in docs/)
+
+---
+
 ## User Communication Style
 
 - User may use Korean/English mix

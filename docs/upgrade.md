@@ -16,6 +16,65 @@
 
 ---
 
+## Upgrading to v0.2.0
+
+v0.2.0 introduces the memory bank system. **No breaking changes** - fully backward compatible.
+
+### What's New in v0.2.0
+
+- ✨ Memory bank system for tracking decisions and progress
+- ✨ `/rapidspec.constitution` command for memory bank initialization
+- ✨ `/rapidspec.umb` command for session-based memory updates
+- ✨ Optional memory bank integration to all commands
+- ✨ Comprehensive memory bank documentation
+
+### Upgrade Steps
+
+```bash
+# 1. Upgrade CLI
+uv tool install rapidspec-cli --force --from git+https://github.com/benzntech/rapidspec-kit.git
+
+# 2. Update project files (optional but recommended)
+rapidspec init --here --force --ai <your-agent>
+
+# 3. Initialize memory bank (optional - only if you want to use it)
+/rapidspec.constitution
+```
+
+### Backward Compatibility
+
+✅ All existing commands work unchanged
+✅ Memory bank is completely optional
+✅ No forced migration needed
+✅ Can adopt gradually
+
+### Using Memory Bank
+
+Once upgraded, you can optionally use the new memory bank system:
+
+```bash
+# Initialize memory bank (analyzes your codebase)
+/rapidspec.constitution
+
+# Log decisions during development
+/rapidspec.proposal --update-memory "Feature name"
+
+# Track progress
+/rapidspec.apply change-id --track-progress
+
+# Commits and archives auto-log (no flags needed)
+/rapidspec.commit "commit message"
+/rapidspec.archive change-id
+```
+
+### Documentation
+
+- **Integration guide**: See `MEMORY_BANK_INTEGRATION.md`
+- **User guide**: See `docs/memory-bank.md`
+- **AI instructions**: See `AGENTS.md` (Memory Bank Integration section)
+
+---
+
 ## Part 1: Upgrade the CLI Tool
 
 The CLI tool (`specify`) is separate from your project files. Upgrade it to get the latest features and bug fixes.
