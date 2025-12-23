@@ -250,4 +250,46 @@ Good: Merge deltas → Validate strictly → Fix errors
 
 - User says "yes" (proceed), "wait" (wait) if issues found
 
+## Memory Bank Integration (Automatic)
+
+After successful archive, automatically update the memory bank to move the change from in-progress to completed:
+
+**Automatic behavior:**
+- After successful archive, call `/rapidspec.umb` automatically
+- Archives represent feature completions - always recorded in memory bank
+
+**What gets logged automatically:**
+
+```bash
+/rapidspec.umb Feature archived: $CHANGE_ID
+- Archived to: changes/archive/$TIMESTAMP-$CHANGE_ID/
+- Proposal: [link to proposal.md]
+- Tasks completed: [all tasks]
+- Commits: [all commit hashes]
+- Specs merged: [into canonical specs/]
+```
+
+This will:
+1. Update `progress.md` to move change from "Current Work" to "Completed Work"
+2. Clear from `activeContext.md` objectives
+3. Archive entry includes implementation details and lessons learned
+
+**Why automatic:**
+- Ensures all completed work is permanently recorded
+- Moves context from active to archive
+- Enables project history and retrospectives
+- Supports team learning from completed features
+
+**Example:**
+```bash
+# Archive feature (always updates memory bank automatically)
+/rapidspec.archive "oauth2-implementation"
+
+# Archive succeeds, deltas merged, specs validated
+# Memory bank automatically updated:
+#   - progress.md: "OAuth2 feature archived, shipped in v2.1"
+#   - activeContext.md: "Objectives cleared, ready for next feature"
+#   - Archive path: changes/archive/2025-12-23-oauth2-implementation/
+```
+
 <!-- SPECKIT.SPEC:END -->

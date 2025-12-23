@@ -524,4 +524,39 @@ Good: If not fixing now, note why and when to fix
 
 - Can re-run triage if new findings discovered during implementation
 
+## Memory Bank Integration (Optional)
+
+After triage completes with accepted items, optionally update memory bank with triage decisions:
+
+**Optional flags:**
+- Add `--log-triage` to log accepted triage items and priority decisions
+- Add `--skip-memory` to skip memory bank update
+- Default: No automatic update (manual optional)
+
+**What gets logged:**
+
+If user opts in, call `/rapidspec.umb` with triage results:
+
+```bash
+/rapidspec.umb Triage completed: $CHANGE_ID
+- Critical items accepted: [count and areas]
+- Priority decisions: [which items to fix first]
+- Deferred items: [low priority items with rationale]
+- Timeline: [when fixes needed]
+```
+
+This will:
+1. Update `activeContext.md` with prioritized blockers and next steps
+2. Append to `decisionLog.md` with triage priority decisions
+3. Update `progress.md` with issue tracking status
+
+**Example:**
+```bash
+# Run triage with memory bank logging
+/rapidspec.triage mychange --log-triage
+
+# User accepts 5 critical, defers 3 warnings
+# Memory bank updated with triage decisions
+```
+
 <!-- SPECKIT.SPEC:END -->

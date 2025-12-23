@@ -545,4 +545,45 @@ Good: Task framework-docs-researcher(next.js, authentication)
 
 - **Verify everything** with actual code reads, never assume
 
+## Memory Bank Integration (Optional)
+
+After completing proposal creation and receiving user approval, optionally update the memory bank with the decision analysis:
+
+**Optional flags:**
+- Add `--update-memory` to automatically update memory bank after proposal creation
+- Add `--skip-memory` to explicitly skip memory bank updates
+- If neither flag provided, prompt user: "Update memory bank with proposal analysis? (yes/no/auto)"
+
+**What gets logged to memory bank:**
+
+If user opts in, call `/rapidspec.umb` with these details:
+
+```bash
+/rapidspec.umb Auto-logged proposal: $CHANGE_ID
+- Description: [User's feature description]
+- Decision: Selected option [#] with rationale
+- Options considered: [List alternatives analyzed]
+- Key context: [Important findings from investigation and research]
+```
+
+This will:
+1. Append new entry to `decisionLog.md` with timestamp
+2. Update `activeContext.md` with current work objectives
+3. Update `progress.md` with new in-progress work item
+
+**Behavior:**
+- Default: `--prompt` (ask user each time)
+- User can set preference with `--auto` (always update) or `--skip` (never update)
+- Memory update doesn't affect proposal creation, happens after user confirms
+- If memory bank not initialized, skip silently (doesn't block proposal creation)
+
+**Example:**
+```bash
+# Create proposal with memory bank auto-update
+/rapidspec.proposal --update-memory "Add OAuth2 authentication"
+
+# Later, to set auto-update as default
+/rapidspec.proposal --auto "Add OAuth2 authentication"
+```
+
 <!-- RAPIDSPEC:END -->

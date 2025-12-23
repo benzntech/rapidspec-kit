@@ -443,4 +443,51 @@ Good: "Stopped. What should I change?"
 
 - After complete, suggest `/rapidspec.review` for quality check
 
+## Memory Bank Integration (Optional)
+
+During implementation at checkpoint intervals (every 5 checkpoints), optionally update the memory bank with progress:
+
+**Optional checkpoint flags:**
+- Add `--track-progress` to update memory bank every 5 checkpoints with partial progress
+- Add `--full-track` to update at every checkpoint (more frequent updates)
+- Add `--skip-memory` to never update during apply
+- If none specified, no automatic updates during apply (only at completion)
+
+**What gets logged during checkpoints:**
+
+At checkpoint intervals, call `/rapidspec.umb` with progress summary:
+
+```bash
+/rapidspec.umb Progress on $CHANGE_ID: Checkpoints 1-5/20 complete
+- Completed tasks: [list of 5 task names]
+- Current focus: [next task]
+- Blockers encountered: [if any]
+- Tests passing: [status]
+```
+
+This will:
+1. Update `progress.md` with in-progress work status
+2. Update `activeContext.md` with current blockers if any
+3. Maintain resumption context if work paused
+
+**After completion, final memory update:**
+
+When apply finishes (all tasks complete), suggest: "Run `/rapidspec.umb` to log final progress" or auto-call if `--auto` flag was used.
+
+**Behavior:**
+- Default: No automatic updates during apply (manual is better for performance)
+- Users can enable with `--track-progress` flag for long implementations
+- Memory updates happen after checkpoints, don't block implementation
+- If memory bank not initialized, skip silently
+- Useful for resuming work after pauses
+
+**Example:**
+```bash
+# Start apply with checkpoint tracking
+/rapidspec.apply mychange --track-progress
+
+# At checkpoints 5, 10, 15, 20: Memory bank updated automatically
+# Final completion: Suggestion to call /rapidspec.umb
+```
+
 <!-- SPECKIT.SPEC:END -->

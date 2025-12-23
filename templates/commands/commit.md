@@ -337,4 +337,46 @@ Good: Add "Discovered Tasks" → Update tasks.md
 
 - After commit, suggest `/rapidspec.review` for quality check
 
+## Memory Bank Integration (Automatic)
+
+After successful commit, automatically update the memory bank to record completed work:
+
+**Automatic behavior:**
+- After successful commit, call `/rapidspec.umb` automatically (no flags needed)
+- This is not optional - commit progress is always logged to memory bank
+
+**What gets logged automatically:**
+
+```bash
+/rapidspec.umb Work committed: $CHANGE_ID
+- Commit: $COMMIT_HASH
+- Message: $COMMIT_MESSAGE
+- Tasks completed: [list of marked [x] tasks]
+- Discovered work: [any unplanned work captured]
+- Files modified: [count and types]
+```
+
+This will:
+1. Append new entry to `progress.md` marking work as completed
+2. Update `decisionLog.md` with discovered insights from implementation
+3. Update `activeContext.md` to clear completed objectives
+
+**Why automatic:**
+- Ensures all committed work is recorded in memory bank
+- Maintains continuous audit trail of all changes
+- Enables project history reconstruction
+- Supports team knowledge retention
+
+**Example:**
+```bash
+# Create commit (always updates memory bank automatically)
+/rapidspec.commit "feat: add OAuth2 authentication"
+
+# Git commit succeeds
+# Memory bank automatically updated:
+#   - progress.md: "OAuth2 feature committed"
+#   - decisionLog.md: "Implemented JWT token strategy"
+#   - activeContext.md: "Objectives cleared, next task identified"
+```
+
 <!-- RAPIDSPEC:END -->

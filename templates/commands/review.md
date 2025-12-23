@@ -600,4 +600,48 @@ Good: yes to fix → Resolve all critical → Then commit
 
 - **Typical review runs 3-6 agents** (not all 11), keeping it fast and relevant
 
+## Memory Bank Integration (Optional)
+
+After review completion, optionally log critical findings and improvements to the memory bank:
+
+**Optional flags:**
+- Add `--log-findings` to automatically log critical findings to memory bank after review
+- Add `--skip-memory` to explicitly skip memory bank updates
+- If neither flag provided, prompt user: "Log review findings to memory bank? (yes/no/auto)"
+
+**What gets logged to memory bank:**
+
+If user opts in, call `/rapidspec.umb` with review summary:
+
+```bash
+/rapidspec.umb Code review completed for $CHANGE_ID
+- Review agents: [list of agents that ran]
+- Critical findings: [count and summary]
+- Warnings issued: [count and areas]
+- Improvements implemented: [if any]
+- New patterns observed: [if any patterns to document]
+```
+
+This will:
+1. Append summary entry to `decisionLog.md` with review findings
+2. Update `systemPatterns.md` if new patterns or anti-patterns identified
+3. Update `activeContext.md` with any remaining blockers from review
+
+**Behavior:**
+- Default: `--prompt` (ask user)
+- User can set `--auto` (always log) or `--skip` (never log)
+- Logging happens after review completes, doesn't block user decision on fixes
+- If memory bank not initialized, skip silently
+- Useful for documenting what was fixed and why
+
+**Example:**
+```bash
+# Run review with automatic logging of findings
+/rapidspec.review mychange --log-findings
+
+# Review completes with 2 critical, 3 warnings
+# Auto-logs findings to memory bank
+# Memory now shows: "2 critical issues from review, 3 patterns improved"
+```
+
 <!-- RAPIDSPEC:END -->

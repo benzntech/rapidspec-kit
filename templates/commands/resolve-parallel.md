@@ -472,4 +472,39 @@ Good: Migration fails → Stop dependent tasks → Fix → Resume
 
 - Always update tasks.md after each wave completion
 
+## Memory Bank Integration (Optional)
+
+After completing parallel resolution of multiple items, optionally update memory bank with wave progress:
+
+**Optional flags:**
+- Add `--track-waves` to log completion of each resolution wave
+- Add `--skip-memory` to skip updates
+- Default: Prompt user after all waves complete
+
+**What gets logged:**
+
+If user opts in, call `/rapidspec.umb` with parallel resolution summary:
+
+```bash
+/rapidspec.umb Parallel resolution completed: $CHANGE_ID
+- Waves completed: [number]
+- Total tasks resolved: [count]
+- Dependencies resolved: [count]
+- Implementation time: [saved vs sequential estimate]
+```
+
+This will:
+1. Update `progress.md` with completion summary
+2. Update `activeContext.md` with next steps
+3. Document efficiency gains from parallel execution
+
+**Example:**
+```bash
+# Run parallel resolution with progress tracking
+/rapidspec.resolve-parallel mychange --track-waves
+
+# Completes 3 waves of parallel tasks
+# Memory bank updated: "20 issues resolved in 3 parallel waves (50% faster)"
+```
+
 <!-- RAPIDSPEC:END -->

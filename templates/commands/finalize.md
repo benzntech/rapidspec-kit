@@ -60,4 +60,11 @@ User: "/rapidspec.finalize"
 AI: "Finalizing workflow..."
 AI executes: /rapidspec.archive
 ```
+
+## Memory Bank Integration (Automatic)
+
+After successful finalize (archive), automatically update the memory bank (same as archive command).
+
+See `archive.md` Memory Bank Integration section for details on automatic logging of completed features.
+
 <!-- SPECKIT.SPEC:END -->
