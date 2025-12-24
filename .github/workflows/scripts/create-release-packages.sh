@@ -92,23 +92,16 @@ generate_commands() {
     case $ext in
       toml)
         body=$(printf '%s\n' "$body" | sed 's/\\/\\\\/g')
-        # Generate new rapidspec.* commands
+        # Generate rapidspec.* commands only
         { echo "description = \"$description\""; echo; echo "prompt = \"\"\""; echo "$body"; echo "\"\"\""; } > "$output_dir/rapidspec.$name.$ext"
-        # Generate deprecated speckit.* commands with warning
-        deprecated_body=$'⚠️ DEPRECATED: Use /rapidspec.'$name' instead\n\n'"$body"
-        { echo "description = \"$description (DEPRECATED)\""; echo; echo "prompt = \"\"\""; echo "$deprecated_body"; echo "\"\"\""; } > "$output_dir/speckit.$name.$ext"
         ;;
       md)
-        # Generate new rapidspec.* commands
+        # Generate rapidspec.* commands only
         echo "$body" > "$output_dir/rapidspec.$name.$ext"
-        # Generate deprecated speckit.* commands with warning
-        { echo "⚠️ **DEPRECATED**: Use \`/rapidspec.$name\` instead"; echo; echo "$body"; } > "$output_dir/speckit.$name.$ext"
         ;;
       agent.md)
-        # Generate new rapidspec.* commands
+        # Generate rapidspec.* commands only
         echo "$body" > "$output_dir/rapidspec.$name.$ext"
-        # Generate deprecated speckit.* commands with warning
-        { echo "⚠️ **DEPRECATED**: Use \`/rapidspec.$name\` instead"; echo; echo "$body"; } > "$output_dir/speckit.$name.$ext"
         ;;
     esac
   done
@@ -118,8 +111,8 @@ generate_copilot_prompts() {
   local agents_dir=$1 prompts_dir=$2
   mkdir -p "$prompts_dir"
 
-  # Generate a .prompt.md file for each .agent.md file (both rapidspec and deprecated speckit)
-  for agent_file in "$agents_dir"/rapidspec.*.agent.md "$agents_dir"/speckit.*.agent.md; do
+  # Generate a .prompt.md file for each rapidspec.*.agent.md file
+  for agent_file in "$agents_dir"/rapidspec.*.agent.md; do
     [[ -f "$agent_file" ]] || continue
 
     local basename=$(basename "$agent_file" .agent.md)
