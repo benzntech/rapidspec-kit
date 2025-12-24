@@ -10,18 +10,18 @@
 # ]
 # ///
 """
-Specify CLI - Setup tool for Specify projects
+RapidSpec CLI - Setup tool for RapidSpec projects
 
 Usage:
-    uvx specify-cli.py init <project-name>
-    uvx specify-cli.py init .
-    uvx specify-cli.py init --here
+    uvx rapidspec-cli --from git+https://github.com/benzntech/rapidspec-kit.git init <project-name>
+    uvx rapidspec-cli --from git+https://github.com/benzntech/rapidspec-kit.git init .
+    uvx rapidspec-cli --from git+https://github.com/benzntech/rapidspec-kit.git init --here
 
 Or install globally:
-    uv tool install --from specify-cli.py specify-cli
-    specify init <project-name>
-    specify init .
-    specify init --here
+    uv tool install rapidspec-cli --from git+https://github.com/benzntech/rapidspec-kit.git
+    rapidspec init <project-name>
+    rapidspec init .
+    rapidspec init --here
 """
 
 import os
