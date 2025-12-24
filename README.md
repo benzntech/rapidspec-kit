@@ -358,85 +358,115 @@ RapidSpec provides 10 specialized commands for different stages of the spec-driv
 
 ## ℹ️ About RapidSpec
 
-### What Makes RapidSpec Different?
+### RapidSpec: Spec-First Development Evolved
 
-RapidSpec-Kit is a **specification-first development toolkit** that bridges the gap between human requirements and AI-generated code. Rather than asking AI to "just build it," RapidSpec creates detailed, verified specifications first, then generates implementations from those specifications.
+RapidSpec-Kit is a **modern fork of SpecKit** that brings specification-first development to every AI coding agent. Built on SpecKit's proven command structure and workflow, RapidSpec adds **intelligent automation** and a **persistent memory system** to make specification-driven development practical for real-world projects.
 
-### The Problem We Solve
+### What Makes RapidSpec Different from SpecKit?
 
-Traditional AI-assisted development often suffers from:
-- **Incomplete understanding** - AI doesn't fully grasp what users actually need
-- **No verification** - Implementation details are often assumed, not verified
-- **Hallucinated code** - AI might propose features that can't actually be implemented
-- **Lost context** - Each session starts from scratch with no project memory
-- **Inconsistent quality** - Different parts of the codebase follow different patterns
+RapidSpec keeps the best of SpecKit's workflow while adding automation that was previously manual:
 
-### How RapidSpec Solves It
+**Beyond SpecKit:**
+- **Memory Bank System** - Automatic codebase analysis populates project context on initialization
+- **Multi-Model Support** - Works with 17 AI models (Claude, Gemini, Copilot, Cursor, and more)
+- **Intelligent Population** - Specs are auto-populated from your actual codebase, not from scratch
+- **Shell Variants** - Both bash/sh and PowerShell support for universal platform coverage
+- **Persistent Context** - Project governance and patterns persist across sessions
+- **Checkpoint-Based Execution** - Pausable, verifiable workflow at each step
 
-1. **Specifications First** - Detailed specs define what before any code is written
-2. **Verified Implementation** - AI reads actual code before proposing changes
-3. **Checkpointed Progress** - Work is done in small, testable increments
-4. **Memory Bank** - Project context persists across sessions
-5. **Quality Review** - Multi-agent review across security, architecture, testing, and more
+### The Core Philosophy
+
+Specification-first development means **defining what before building how**:
+
+1. **Start with Specs** - Write detailed requirements and implementation plans
+2. **Read Real Code** - AI analyzes your actual codebase before proposing changes
+3. **Execute in Checkpoints** - Implement in small, testable, verifiable steps
+4. **Track Context** - Project memory persists across sessions and team members
+5. **Review Quality** - Multi-agent verification across multiple dimensions
+
+This approach solves problems that plague traditional AI development:
+- **Incomplete understanding** - AI doesn't guess; it reads your actual code
+- **No hallucinations** - Proposals are grounded in reality, not assumptions
+- **Lost context** - Memory bank preserves decisions and patterns
+- **Inconsistent quality** - Standards are documented and enforced
+- **Slow feedback loops** - Checkpoints make verification fast and incremental
 
 ### Key Capabilities
 
 **Spec-Driven Workflow:**
-- Transform ideas into detailed specifications
-- Generate implementation plans from specifications
-- Create actionable task lists
-- Execute with verification at each step
+- Write detailed specifications before implementation
+- Auto-generate implementation plans from specs
+- Execute with verification at each checkpoint
+- Track progress with decision rationale
 - Archive completed work with full history
 
-**AI Model Flexibility:**
-- 17 supported AI models across different platforms
-- Markdown-based command system (model-agnostic)
-- Automatic adaptation to model-specific formats
-- No vendor lock-in
+**17 AI Model Support:**
+- Claude, Gemini, Copilot, Cursor, Qwen, OpenCode, Windsurf, Codex, KiloCode, Auggie, Roo, CodeBuddy, QODer, AMP, Shai, Amazon Q, Bob
+- Works with any AI agent - no vendor lock-in
+- Markdown-based commands (model-agnostic)
 
-**Memory & Knowledge:**
-- 6-file memory bank system
-- Automatic codebase analysis and population
-- Decision logging with rationale
-- Pattern documentation
-- Work progress tracking
+**Automated Memory Bank:**
+- 6-file system (constitution, productContext, activeContext, systemPatterns, decisionLog, progress)
+- Auto-analyzes codebase and populates initial context
+- Decision logging with rationale and timestamp
+- Pattern documentation for consistency
+- Persistent work tracking
 
 **Quality Assurance:**
 - 7+ dimension multi-agent code review
-- Architecture verification
-- Security audit capability
-- Database safety checking
+- Architecture verification against actual codebase
+- Security and database safety checking
 - Test coverage analysis
+- Explicit verification (no hallucinations)
 
-### Design Philosophy
+### How It Works
 
-RapidSpec follows these core principles:
+**Step 1: Initialize** - `/rapidspec.constitution` analyzes your project and creates the memory bank
 
-- **Specification-First**: Specifications are the source of truth
-- **Checkpoint-Based**: Implementation is pausable and verifiable at each step
-- **Explicit Verification**: No hallucinations - verify against actual code
-- **Traceable Changes**: Every change is documented with proposal, implementation, and decision rationale
-- **Task-Driven**: Clear tasks with acceptance criteria, not vague goals
+**Step 2: Plan** - `/rapidspec.proposal` creates detailed specs with research and alternatives
+
+**Step 3: Verify** - `/rapidspec.review` checks specs against architecture and patterns
+
+**Step 4: Implement** - `/rapidspec.apply` executes with checkpoints and verification
+
+**Step 5: Commit** - `/rapidspec.commit` documents work with memory updates
+
+**Step 6: Track** - `/rapidspec.archive` logs completion with full history
+
+### Design Principles
+
+- **Specification-First**: Specs are the contract between human intent and AI implementation
+- **No Hallucinations**: AI always reads actual code before proposing changes
+- **Checkpointed**: Work is pausable, reviewable, and verifiable at each step
 - **Memory-Aware**: Project context and decisions persist across sessions
+- **Multi-Model**: Works with any AI coding agent, no vendor lock-in
+- **Traceable**: Every change has proposal, implementation, and decision trail
 
 ### Use Cases
 
-**Greenfield Development** - Build new features from scratch with clear specifications
-**Brownfield Enhancement** - Add features to existing projects while maintaining consistency
-**Modernization** - Upgrade legacy systems with documented decisions
-**Team Onboarding** - New team members understand project context from memory bank
-**Parallel Development** - Handle multiple features with conflict resolution
-**Knowledge Retention** - Preserve architectural decisions and patterns
+**Greenfield Development** - Build with clear specifications and documented decisions from day one
 
-### Why Spec-Driven?
+**Brownfield Enhancement** - Add features to existing projects while maintaining consistency across codebase
 
-In 2024, AI code generation is powerful but directionless. RapidSpec adds:
+**Modernization** - Upgrade legacy systems with explicit decision rationale for future teams
 
-- **Direction**: Specifications guide AI toward desired outcomes
-- **Verification**: AI reads actual code, not assumptions
-- **Control**: Humans approve changes at checkpoints
-- **Memory**: Project knowledge persists
-- **Quality**: Multiple verification layers
+**Team Onboarding** - New members understand project architecture, patterns, and decisions from memory bank
+
+**Parallel Development** - Handle multiple concurrent features with conflict resolution and memory synchronization
+
+**Knowledge Retention** - Preserve architectural patterns and decisions that would otherwise be lost
+
+### Why Specification-First Development?
+
+In 2024, AI code generation is powerful but needs direction:
+
+- **Direction**: Specs tell AI what to build, not what to guess
+- **Verification**: AI reads actual code, respects existing patterns
+- **Control**: Humans approve changes at deliberate checkpoints
+- **Memory**: Context persists across sessions and team changes
+- **Quality**: Multiple verification layers prevent hallucinations
+
+Traditional AI development asks "What will the AI build?" Specification-first asks "What do we need, how should it work, and does it fit our codebase?" The answer is always better.
 
 ---
 
