@@ -831,11 +831,17 @@ def download_and_extract_template(project_path: Path, ai_assistant: str, script_
                                             console.print(f"[yellow]Removing existing commands:[/yellow] .rapidspec/commands/")
                                         shutil.rmtree(commands_dir)
 
-                                # Also remove deprecated speckit.* commands from .claude/commands/
-                                if item.name == ".claude":
-                                    claude_commands_dir = dest_path / "commands"
-                                    if claude_commands_dir.exists():
-                                        for cmd_file in claude_commands_dir.glob("speckit.*.md"):
+                                # Also remove deprecated speckit.* commands from all AI agent folders
+                                # (Claude: .claude/, Gemini: .gemini/, Copilot: .github/, etc.)
+                                agent_folders = {
+                                    ".claude", ".gemini", ".github", ".cursor", ".qwen",
+                                    ".opencode", ".codex", ".windsurf", ".kilocode", ".augment",
+                                    ".codebuddy", ".qoder", ".roo", ".q", ".shai", ".bob", ".amp"
+                                }
+                                if item.name in agent_folders:
+                                    agent_commands_dir = dest_path / "commands"
+                                    if agent_commands_dir.exists():
+                                        for cmd_file in agent_commands_dir.glob("speckit.*.md"):
                                             try:
                                                 cmd_file.unlink()
                                                 if verbose and not tracker:
