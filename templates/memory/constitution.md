@@ -135,3 +135,4 @@
 ---
 
 *This constitution serves as the governance foundation for the project. It should be reviewed annually and updated as the project evolves.*
+
