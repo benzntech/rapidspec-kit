@@ -831,6 +831,18 @@ def download_and_extract_template(project_path: Path, ai_assistant: str, script_
                                             console.print(f"[yellow]Removing existing commands:[/yellow] .rapidspec/commands/")
                                         shutil.rmtree(commands_dir)
 
+                                # Also remove deprecated speckit.* commands from .claude/commands/
+                                if item.name == ".claude":
+                                    claude_commands_dir = dest_path / "commands"
+                                    if claude_commands_dir.exists():
+                                        for cmd_file in claude_commands_dir.glob("speckit.*.md"):
+                                            try:
+                                                cmd_file.unlink()
+                                                if verbose and not tracker:
+                                                    console.print(f"[yellow]Removed deprecated:[/yellow] {cmd_file.name}")
+                                            except Exception:
+                                                pass
+
                                 if verbose and not tracker:
                                     console.print(f"[yellow]Merging directory:[/yellow] {item.name}")
                                 for sub_item in item.rglob('*'):
