@@ -1302,7 +1302,7 @@ def version():
     # Get CLI version from package metadata
     cli_version = "unknown"
     try:
-        cli_version = importlib.metadata.version("specify-cli")
+        cli_version = importlib.metadata.version("rapidspec-cli")
     except Exception:
         # Fallback: try reading from pyproject.toml if running from source
         try:
