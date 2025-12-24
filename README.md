@@ -26,6 +26,8 @@
 - [📚 Core Philosophy](#-core-philosophy)
 - [🌟 Development Phases](#-development-phases)
 - [🎯 Experimental Goals](#-experimental-goals)
+- [💾 Available Commands](#-available-commands)
+- [ℹ️ About RapidSpec](#-about-rapidspec)
 - [🔧 Prerequisites](#-prerequisites)
 - [📖 Learn More](#-learn-more)
 - [📋 Detailed Process](#-detailed-process)
@@ -293,6 +295,150 @@ Our research and experimentation focus on:
 - Validate the concept of parallel implementation exploration
 - Provide robust iterative feature development workflows
 - Extend processes to handle upgrades and modernization tasks
+
+---
+
+## 💾 Available Commands
+
+RapidSpec provides 10 specialized commands for different stages of the spec-driven development workflow:
+
+### Governance & Context
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.constitution` | Initialize and manage project governing principles | Intelligent codebase analysis with auto-population |
+
+### Specification & Planning
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.proposal` | Create feature proposals with research and alternatives | Multi-option comparison with impact analysis |
+| `/rapidspec.review` | Comprehensive code quality and architecture reviews | Multi-agent review across 7+ dimensions |
+
+### Implementation & Execution
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.apply` | Apply proposed changes to codebase with verification | Checkpoint-based with before/after diffs |
+| `/rapidspec.commit` | Generate conventional commits with task verification | Automatic memory bank logging |
+
+### Work Management
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.archive` | Archive and track completed features | Historical tracking and spec merging |
+| `/rapidspec.finalize` | Prepare releases and handle deployments | Completion workflow integration |
+| `/rapidspec.triage` | Categorize and prioritize issues | Intelligent classification system |
+
+### Parallel Development
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.resolve-parallel` | Handle conflicts in parallel feature development | Wave-based resolution strategy |
+
+### Memory & Context
+
+| Command | Purpose | Key Feature |
+|---------|---------|------------|
+| `/rapidspec.umb` | Update memory bank during sessions | Non-blocking context tracking |
+
+### Command Features Summary
+
+✅ **All 10 commands support 17 AI models** (Claude, Gemini, Copilot, Cursor, Qwen, OpenCode, Windsurf, Codex, KiloCode, Auggie, Roo, CodeBuddy, QODer, AMP, Shai, Amazon Q, Bob)
+
+✅ **Both shell variants** - sh (bash/zsh) and ps (PowerShell)
+
+✅ **Memory bank integration** - Auto-tracking of decisions, patterns, and progress
+
+✅ **POSIX compatible** - Works on macOS, Linux, and Windows
+
+✅ **Consistent updates** - Commands always get latest templates via `rapidspec init --here`
+
+---
+
+## ℹ️ About RapidSpec
+
+### What Makes RapidSpec Different?
+
+RapidSpec-Kit is a **specification-first development toolkit** that bridges the gap between human requirements and AI-generated code. Rather than asking AI to "just build it," RapidSpec creates detailed, verified specifications first, then generates implementations from those specifications.
+
+### The Problem We Solve
+
+Traditional AI-assisted development often suffers from:
+- **Incomplete understanding** - AI doesn't fully grasp what users actually need
+- **No verification** - Implementation details are often assumed, not verified
+- **Hallucinated code** - AI might propose features that can't actually be implemented
+- **Lost context** - Each session starts from scratch with no project memory
+- **Inconsistent quality** - Different parts of the codebase follow different patterns
+
+### How RapidSpec Solves It
+
+1. **Specifications First** - Detailed specs define what before any code is written
+2. **Verified Implementation** - AI reads actual code before proposing changes
+3. **Checkpointed Progress** - Work is done in small, testable increments
+4. **Memory Bank** - Project context persists across sessions
+5. **Quality Review** - Multi-agent review across security, architecture, testing, and more
+
+### Key Capabilities
+
+**Spec-Driven Workflow:**
+- Transform ideas into detailed specifications
+- Generate implementation plans from specifications
+- Create actionable task lists
+- Execute with verification at each step
+- Archive completed work with full history
+
+**AI Model Flexibility:**
+- 17 supported AI models across different platforms
+- Markdown-based command system (model-agnostic)
+- Automatic adaptation to model-specific formats
+- No vendor lock-in
+
+**Memory & Knowledge:**
+- 6-file memory bank system
+- Automatic codebase analysis and population
+- Decision logging with rationale
+- Pattern documentation
+- Work progress tracking
+
+**Quality Assurance:**
+- 7+ dimension multi-agent code review
+- Architecture verification
+- Security audit capability
+- Database safety checking
+- Test coverage analysis
+
+### Design Philosophy
+
+RapidSpec follows these core principles:
+
+- **Specification-First**: Specifications are the source of truth
+- **Checkpoint-Based**: Implementation is pausable and verifiable at each step
+- **Explicit Verification**: No hallucinations - verify against actual code
+- **Traceable Changes**: Every change is documented with proposal, implementation, and decision rationale
+- **Task-Driven**: Clear tasks with acceptance criteria, not vague goals
+- **Memory-Aware**: Project context and decisions persist across sessions
+
+### Use Cases
+
+**Greenfield Development** - Build new features from scratch with clear specifications
+**Brownfield Enhancement** - Add features to existing projects while maintaining consistency
+**Modernization** - Upgrade legacy systems with documented decisions
+**Team Onboarding** - New team members understand project context from memory bank
+**Parallel Development** - Handle multiple features with conflict resolution
+**Knowledge Retention** - Preserve architectural decisions and patterns
+
+### Why Spec-Driven?
+
+In 2024, AI code generation is powerful but directionless. RapidSpec adds:
+
+- **Direction**: Specifications guide AI toward desired outcomes
+- **Verification**: AI reads actual code, not assumptions
+- **Control**: Humans approve changes at checkpoints
+- **Memory**: Project knowledge persists
+- **Quality**: Multiple verification layers
+
+---
 
 ## 🔧 Prerequisites
 
