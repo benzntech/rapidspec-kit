@@ -823,6 +823,14 @@ def download_and_extract_template(project_path: Path, ai_assistant: str, script_
                         dest_path = project_path / item.name
                         if item.is_dir():
                             if dest_path.exists():
+                                # Special handling: remove .rapidspec/commands/ before merging to restore clean templates
+                                if item.name == ".rapidspec":
+                                    commands_dir = dest_path / "commands"
+                                    if commands_dir.exists():
+                                        if verbose and not tracker:
+                                            console.print(f"[yellow]Removing existing commands:[/yellow] .rapidspec/commands/")
+                                        shutil.rmtree(commands_dir)
+
                                 if verbose and not tracker:
                                     console.print(f"[yellow]Merging directory:[/yellow] {item.name}")
                                 for sub_item in item.rglob('*'):
