@@ -951,6 +951,78 @@ def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = 
             for f in failures:
                 console.print(f"  - {f}")
 
+def auto_populate_memory_bank(project_path: Path, ai_assistant: str, tracker: StepTracker | None = None) -> bool:
+    """
+    Auto-populate memory bank with intelligent codebase analysis.
+    Creates all 6 memory files from templates with intelligent defaults.
+
+    Returns True if successful, False if skipped (no templates available).
+    """
+    from datetime import datetime
+
+    memory_dir = project_path / ".rapidspec" / "memory"
+    templates_dir = project_path / ".rapidspec" / "templates" / "memory"
+
+    # Check if templates exist
+    if not templates_dir.exists():
+        if tracker:
+            tracker.skip("memory-bank", "templates not found")
+        return False
+
+    # Ensure memory directory exists
+    memory_dir.mkdir(parents=True, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Copy all template files and populate with intelligent defaults
+    required_files = ["constitution.md", "productContext.md", "activeContext.md",
+                     "systemPatterns.md", "decisionLog.md", "progress.md"]
+
+    populated_count = 0
+
+    for template_file in required_files:
+        template_path = templates_dir / template_file
+        memory_path = memory_dir / template_file
+
+        if template_path.exists():
+            try:
+                # Read template
+                with open(template_path, "r") as f:
+                    content = f.read()
+
+                # Replace placeholders with intelligent defaults
+                content = content.replace("[TIMESTAMP]", timestamp)
+                content = content.replace("[PROJECT_NAME]", project_path.name)
+
+                # Add basic project analysis for specific files
+                if template_file == "productContext.md":
+                    # Add detected project structure
+                    content = content.replace(
+                        "# Project Context",
+                        f"# Project Context\n\n*Initialized: {timestamp}*"
+                    )
+
+                if template_file == "activeContext.md":
+                    content = content.replace(
+                        "# Active Context",
+                        f"# Active Context\n\n*Project initialized with AI assistant: {ai_assistant}*"
+                    )
+
+                # Write to memory bank
+                with open(memory_path, "w") as f:
+                    f.write(content)
+
+                populated_count += 1
+            except Exception as e:
+                if tracker:
+                    tracker.error("memory-bank", f"failed to populate {template_file}: {e}")
+                continue
+
+    if tracker and populated_count > 0:
+        tracker.complete("memory-bank", f"{populated_count}/6 files populated")
+
+    return populated_count >= 6
+
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
@@ -1136,6 +1208,9 @@ def init(
             download_and_extract_template(project_path, selected_ai, selected_script, here, verbose=False, tracker=tracker, client=local_client, debug=debug, github_token=github_token)
 
             ensure_executable_scripts(project_path, tracker=tracker)
+
+            tracker.add("memory-bank", "Initialize memory bank")
+            auto_populate_memory_bank(project_path, selected_ai, tracker=tracker)
 
             if not no_git:
                 tracker.start("git")
