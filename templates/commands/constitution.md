@@ -294,6 +294,19 @@ Command is successful when:
 
 ---
 
+## Command Template Restoration
+
+When users run `rapidspec init --here` on an existing project:
+
+1. The `.rapidspec/commands/` directory is **removed entirely**
+2. Fresh command templates are **restored from the latest template**
+3. This ensures:
+   - Users always have up-to-date commands
+   - Deprecated commands are completely removed
+   - Custom commands don't interfere with template updates
+
+The memory bank (constitution.md, productContext.md, etc.) is **preserved and merged** normally - only commands are reset.
+
 ## Integration with Other Commands
 
 This command creates the foundation that other commands use:
