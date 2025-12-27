@@ -25,6 +25,55 @@ CAN commit partial work for incremental progress.
 
 ## Main Tasks
 
+### 0. Create Feature/Fix Branch (NEW - BEFORE CHANGES)
+
+<thinking>
+RapidSpec commit should NOT commit to main directly.
+Instead, create a feature or fix branch based on the change type.
+This ensures all changes go through PR review before merging to main.
+</thinking>
+
+**Branch Creation Strategy:**
+
+1. **Determine branch type** from commit message type:
+   - `feat(...)` → Create `feature/[change-id]` branch
+   - `fix(...)` → Create `fix/[change-id]` branch
+   - `refactor(...)` → Create `refactor/[change-id]` branch
+   - `perf(...)` → Create `perf/[change-id]` branch
+   - Other types → Create `chore/[change-id]` branch
+
+2. **Get change-id** from context or argument (e.g., "add-user-auth")
+
+3. **Create and switch to branch:**
+   ```bash
+   # Check current branch
+   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+   # If on main, create feature branch
+   if [[ "$CURRENT_BRANCH" == "main" ]]; then
+     COMMIT_TYPE=$(echo "$MESSAGE" | grep -oP '^\w+' || echo "chore")
+
+     case "$COMMIT_TYPE" in
+       feat) BRANCH_PREFIX="feature" ;;
+       fix) BRANCH_PREFIX="fix" ;;
+       refactor) BRANCH_PREFIX="refactor" ;;
+       perf) BRANCH_PREFIX="perf" ;;
+       *) BRANCH_PREFIX="chore" ;;
+     esac
+
+     BRANCH_NAME="$BRANCH_PREFIX/$CHANGE_ID"
+     git checkout -b "$BRANCH_NAME"
+     echo "✓ Created branch: $BRANCH_NAME"
+   fi
+   ```
+
+4. **Status check:**
+   - Display: "Branch: [feature/change-id]"
+   - Confirm we're NOT on main anymore
+   - Ready for committing changes
+
+---
+
 ### 1. Review Git Changes (ALWAYS FIRST)
 
 <thinking>
@@ -138,6 +187,7 @@ User may want to revise message or change what's committed.
 <thinking>
 Stage appropriate files and create commit with approved message.
 Show commit hash and suggest next steps in workflow.
+Push to feature branch, not main.
 </thinking>
 
 **Actions:**
@@ -148,7 +198,44 @@ Show commit hash and suggest next steps in workflow.
 
    - Show commit hash
 
-   - Suggest next steps: `/rapidspec.review` or `/rapidspec.archive`
+   - Show current branch: `git rev-parse --abbrev-ref HEAD`
+
+### 7. Push to Feature Branch
+
+<thinking>
+Push the commit to the feature/fix branch, not to main.
+This ensures all work goes through PR review before merging.
+</thinking>
+
+**Push Actions:**
+   ```bash
+   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+   if [[ "$CURRENT_BRANCH" != "main" ]]; then
+     git push origin "$CURRENT_BRANCH"
+     echo "✓ Pushed to branch: $CURRENT_BRANCH"
+     echo ""
+     echo "Next steps:"
+     echo "1. Create PR: gh pr create --title '[commit message title]'"
+     echo "2. Review changes and merge when ready"
+     echo "3. Run: /rapidspec.review $CHANGE_ID (optional quality check)"
+     echo "4. Run: /rapidspec.archive $CHANGE_ID (when deployed)"
+   else
+     echo "⚠ Still on main branch. Please create feature branch first."
+     exit 1
+   fi
+   ```
+
+   - Show pushed branch name
+
+   - Suggest next steps: Create PR, then review/archive
+
+### 8. Suggest Next Steps
+
+**After commit and push:**
+   - Suggest: `/rapidspec.review [change-id]` for quality check
+   - Suggest: Create PR using `gh pr create`
+   - Suggest: `/rapidspec.archive [change-id]` after deployment
 
 ## Commit Types
 
@@ -170,16 +257,23 @@ Show commit hash and suggest next steps in workflow.
 
 **Examples**
 
-Example 1: Complete Feature
+Example 1: Complete Feature (with Feature Branch)
 ```
 User: "/rapidspec.commit add-loading-state"
 
+[Step 0: Create Feature Branch]
+✓ Current branch: main
+✓ Creating branch: feature/add-loading-state
+✓ Switched to: feature/add-loading-state
+
+[Step 1: Review Git Changes]
 AI reviews git:
 ✓ Git diff analyzed: 3 files changed
 ✓ Modified: src/app/dashboard/page.tsx (+12 -3)
 ✓ Added: src/app/dashboard/loading.tsx (new)
 ✓ Added: e2e/dashboard/loading.spec.ts (new)
 
+[Step 2: Match Changes to Tasks]
 Matching to tasks.md...
 ✓ Task 1.1: Add Suspense boundary - DONE
 ✓ Task 1.2: Create loading.tsx - DONE
@@ -187,6 +281,7 @@ Matching to tasks.md...
 
 Status: 3/3 tasks complete
 
+[Step 4: Generate Commit Message]
 Commit message:
 ────────────────────────────────────────
 feat(ui): add loading states with Suspense boundaries
@@ -213,17 +308,35 @@ Ready? (yes)
 
 User: "yes"
 
+[Step 6: Create Commit]
 AI: ✓ Committed: abc1234
+   ✓ Branch: feature/add-loading-state
+
+[Step 7: Push to Feature Branch]
+✓ Pushed to branch: feature/add-loading-state
+
+Next steps:
+1. Create PR: gh pr create --title 'feat(ui): add loading states with Suspense boundaries'
+2. Review changes and merge when ready
+3. Run: /rapidspec.review add-loading-state (optional quality check)
+4. Run: /rapidspec.archive add-loading-state (when deployed)
 ```
 
-Example 2: Partial Commit
+Example 2: Partial Commit (with Feature Branch)
 ```
 User: "/rapidspec.commit add-auth-mutex"
 
+[Step 0: Create Feature Branch]
+✓ Current branch: main
+✓ Creating branch: feature/add-auth-mutex
+✓ Switched to: feature/add-auth-mutex
+
+[Step 1: Review Git Changes]
 AI reviews git:
 ✓ 2 files changed
 ✓ Modified: package.json (new dependency)
 
+[Step 2: Match Changes to Tasks]
 Matching to tasks.md...
 ✓ Task 1.2: Update client.ts - DONE
 ⏳ Task 2.1: Update all auth calls - NOT DONE
@@ -232,39 +345,57 @@ Matching to tasks.md...
 Status: 2/4 tasks complete
 
 Options:
-
 1. Commit partial work (2/4 tasks)
-
 2. Complete remaining tasks first
 
 Which? (1 or 2)
 
 User: "1"
 
-AI:
+[Step 4: Generate Commit Message]
 Commit message:
 feat(auth): add mutex to prevent token refresh race
 
 Partial implementation (2/4 tasks):
-
 - Update client.ts to use new createBrowserClient
 
 Remaining:
-
 - Update all auth calls to use new client
-
 - Add error handling for mutex timeout
 
 Ready? (yes)
+
+User: "yes"
+
+[Step 6: Create Commit]
+AI: ✓ Committed: def5678
+   ✓ Branch: feature/add-auth-mutex
+
+[Step 7: Push to Feature Branch]
+✓ Pushed to branch: feature/add-auth-mutex
+
+Next steps:
+1. Create PR: gh pr create --title 'feat(auth): add mutex to prevent token refresh race'
+2. Continue implementation with remaining tasks
+3. Push additional commits to same branch
+4. Run: /rapidspec.review add-auth-mutex (when tasks complete)
+5. Run: /rapidspec.archive add-auth-mutex (when deployed)
 ```
 
-Example 3: Discovered Work
+Example 3: Discovered Work (with Feature Branch)
 ```
 User: "/rapidspec.commit prevent-duplicate-smartlinks"
 
+[Step 0: Create Feature Branch]
+✓ Current branch: main
+✓ Creating branch: feature/prevent-duplicate-smartlinks
+✓ Switched to: feature/prevent-duplicate-smartlinks
+
+[Step 1: Review Git Changes]
 AI reviews git:
 ✓ 8 files changed
 
+[Step 2: Match Changes to Tasks]
 Matching to tasks.md...
 ✓ 5 planned tasks completed
 
@@ -273,9 +404,10 @@ Discovered work (not in tasks):
 📝 Added: Extracted validation logic to helper
 📝 Fixed: Type error in SmartLinkForm
 
-Updating tasks.md...
+[Step 3: Update tasks.md]
 Added section "4. Performance & Quality (Discovered)"
 
+[Step 4: Generate Commit Message]
 Commit message:
 feat(smart-links): prevent duplicate links per release
 
@@ -298,6 +430,21 @@ feat(smart-links): prevent duplicate links per release
 - Fix: Type error in SmartLinkForm
 
 Ready? (yes)
+
+User: "yes"
+
+[Step 6: Create Commit]
+AI: ✓ Committed: ghi9012
+   ✓ Branch: feature/prevent-duplicate-smartlinks
+
+[Step 7: Push to Feature Branch]
+✓ Pushed to branch: feature/prevent-duplicate-smartlinks
+
+Next steps:
+1. Create PR: gh pr create --title 'feat(smart-links): prevent duplicate links per release'
+2. Review changes and merge when ready
+3. Run: /rapidspec.review prevent-duplicate-smartlinks (recommended for quality check)
+4. Run: /rapidspec.archive prevent-duplicate-smartlinks (when deployed)
 ```
 
 **Anti-Patterns**
