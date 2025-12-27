@@ -4,6 +4,8 @@
 
 This project was initialized with **Qwen Code** on [TIMESTAMP].
 
+**Project Location:** `[PROJECT_PATH]`
+
 ## RapidSpec Commands (10 Total)
 
 ### Core Workflow (5 Commands)

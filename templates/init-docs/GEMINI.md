@@ -2,6 +2,8 @@
 
 This project was initialized with **Gemini CLI** on [TIMESTAMP].
 
+**Project Location:** `[PROJECT_PATH]`
+
 **Note:** The `.rapidspec/` folder with memory bank and configuration files has been created in this directory.
 
 ## RapidSpec Commands (10 Total)

@@ -4,6 +4,8 @@
 
 This project was initialized with **GitHub Copilot** on [TIMESTAMP].
 
+**Project Location:** `[PROJECT_PATH]`
+
 ## RapidSpec Commands (10 Total)
 
 This project includes **10 RapidSpec commands** for specification-first development.

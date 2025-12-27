@@ -1131,9 +1131,11 @@ def create_model_init_guide(project_path: Path, ai_assistant: str, tracker: Step
         # Replace placeholders
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         model_name = AGENT_CONFIG.get(ai_assistant, {}).get("name", ai_assistant)
+        project_full_path = str(project_path.resolve())
 
         content = content.replace("[TIMESTAMP]", timestamp)
         content = content.replace("[Model Name]", model_name)
+        content = content.replace("[PROJECT_PATH]", project_full_path)
 
         # Write to project root with UPPERCASE filename
         output_path = project_path / template_filename

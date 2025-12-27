@@ -4,6 +4,8 @@
 
 This project was initialized with **Codex CLI** on [TIMESTAMP].
 
+**Project Location:** `[PROJECT_PATH]`
+
 ## RapidSpec Commands (10 Total)
 
 ### Core Workflow
