@@ -2,6 +2,8 @@
 
 This project was initialized with **Gemini CLI** on [TIMESTAMP].
 
+**Note:** The `.rapidspec/` folder with memory bank and configuration files has been created in this directory.
+
 ## RapidSpec Commands (10 Total)
 
 This project includes **10 RapidSpec commands** designed for specification-first development with AI.

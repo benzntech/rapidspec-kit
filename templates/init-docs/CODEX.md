@@ -1,4 +1,6 @@
 # Codex CLI - RapidSpec Quick Start
+**Note:** The `.rapidspec/` folder with memory bank and configuration files has been created in this directory.
+
 
 This project was initialized with **Codex CLI** on [TIMESTAMP].
 
