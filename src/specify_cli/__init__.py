@@ -1041,6 +1041,84 @@ def auto_populate_memory_bank(project_path: Path, ai_assistant: str, tracker: St
 
     return populated_count >= 6
 
+def create_model_init_guide(project_path: Path, ai_assistant: str, tracker: StepTracker | None = None) -> bool:
+    """
+    Create model-specific initialization guide in project root.
+    Copies appropriate model template (CLAUDE.md, GEMINI.md, etc.) to project root
+    with placeholders replaced with actual values.
+
+    Returns True if successful, False if template not found.
+    """
+    from datetime import datetime
+
+    # Mapping from agent_key to template filename
+    AGENT_TO_TEMPLATE = {
+        "claude": "CLAUDE",
+        "gemini": "GEMINI",
+        "copilot": "COPILOT",
+        "cursor-agent": "CURSOR",
+        "qwen": "QWEN",
+        "opencode": "OPENCODE",
+        "codex": "CODEX",
+        "windsurf": "WINDSURF",
+        "kilocode": "KILOCODE",
+        "auggie": "AUGGIE",
+        "codebuddy": "CODEBUDDY",
+        "qoder": "QODER",
+        "roo": "ROO",
+        "q": "AMAZONQ",
+        "amp": "AMP",
+        "shai": "SHAI",
+        "bob": "BOB",
+    }
+
+    # Get template filename from agent key
+    template_name = AGENT_TO_TEMPLATE.get(ai_assistant)
+    if not template_name:
+        if tracker:
+            tracker.skip("init-guide", f"unknown agent: {ai_assistant}")
+        return False
+
+    template_filename = f"{template_name}.md"
+
+    # Try to find template in the extracted project first (most reliable)
+    template_path = project_path / ".rapidspec" / "templates" / "init-docs" / template_filename
+    
+    if not template_path.exists():
+        # Try package installation location as fallback
+        template_path = Path(__file__).parent.parent.parent / "templates" / "init-docs" / template_filename
+    
+    if not template_path.exists():
+        if tracker:
+            tracker.skip("init-guide", f"template not found: {template_filename}")
+        return False
+
+    try:
+        # Read template
+        with open(template_path, "r") as f:
+            content = f.read()
+
+        # Replace placeholders
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        model_name = AGENT_CONFIG.get(ai_assistant, {}).get("name", ai_assistant)
+
+        content = content.replace("[TIMESTAMP]", timestamp)
+        content = content.replace("[Model Name]", model_name)
+
+        # Write to project root with UPPERCASE filename
+        output_path = project_path / template_filename
+        with open(output_path, "w") as f:
+            f.write(content)
+
+        if tracker:
+            tracker.complete("init-guide", f"{template_filename} created")
+
+        return True
+    except Exception as e:
+        if tracker:
+            tracker.error("init-guide", f"failed to create: {e}")
+        return False
+
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
@@ -1209,6 +1287,7 @@ def init(
         ("chmod", "Ensure scripts executable"),
         ("cleanup", "Cleanup"),
         ("memory-bank", "Initialize memory bank"),
+        ("init-guide", "Create model-specific guide"),
         ("git", "Initialize git repository"),
         ("final", "Finalize")
     ]:
@@ -1229,6 +1308,8 @@ def init(
             ensure_executable_scripts(project_path, tracker=tracker)
 
             auto_populate_memory_bank(project_path, selected_ai, tracker=tracker)
+
+            create_model_init_guide(project_path, selected_ai, tracker=tracker)
 
             if not no_git:
                 tracker.start("git")
