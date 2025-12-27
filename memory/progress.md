@@ -129,6 +129,73 @@ None currently for v0.0.9 release.
 
 ---
 
+## v0.0.12 Release (Completed)
+
+### [2025-12-27 15:18:54] v0.0.12 Released to Production
+
+**Release**: v0.0.12 - UV Auto-Update Feature
+
+**Status**: ✅ RELEASED
+
+**GitHub Release**: https://github.com/benzntech/rapidspec-kit/releases/tag/v0.0.12
+
+**Release Details**:
+- Created tag v0.0.12 at commit 9e5d3e8
+- Published on GitHub as Latest release
+- Comprehensive release notes (313 lines)
+- Feature complete and production-ready
+
+### [2025-12-27 14:45:38] UV Auto-Update Feature Completed
+
+**Feature**: Automatic UV package manager version checking and auto-update during project initialization
+
+**Status**: ✅ COMPLETED & RELEASED
+
+**Commit**: ac5f3bb - feat(init): add UV package manager auto-update during project initialization
+
+**Implementation Details**:
+- Added `check_uv_version(tracker)` function (60 lines)
+- Added `_compare_versions(current, latest)` utility (30 lines)
+- Integrated UV check into init workflow as early step
+- Graceful error handling with non-blocking design
+
+**Files Modified**:
+- `src/specify_cli/__init__.py` (+122 lines)
+- Added `.github/workflows/scripts/check-uv-version.sh` (150 lines)
+- Added `docs/UV_AUTO_UPDATE.md` (237 lines)
+
+**Key Features**:
+- Detects UV installation via shutil.which()
+- Gets current version from `uv --version`
+- Fetches latest from GitHub API (astral-sh/uv releases)
+- Auto-updates using `uv self update` if outdated
+- Version comparison via integer conversion (X.Y.Z → integer)
+- Non-blocking design: init succeeds even if UV check fails
+- Full StepTracker integration for UI feedback
+
+**Testing**:
+- ✅ Syntax validation: Python compilation successful
+- ✅ Version comparison logic: Tested with multiple formats
+- ✅ Integration: Confirmed in init workflow
+
+**Behavior Modes**:
+1. UV up-to-date: Reports status and continues immediately
+2. UV outdated: Auto-updates via `uv self update` and continues
+3. UV not installed: Logs error but continues (non-blocking)
+
+**Benefits**:
+- Users always have latest UV during project setup
+- Automatic updates reduce setup friction
+- Non-blocking design ensures init always succeeds
+- Transparent tracking via StepTracker UI
+
+**Next Steps**:
+- Update CLAUDE.md with UV feature documentation
+- Consider adding `--skip-uv-check` flag for future versions
+- Monitor UV update success rates in production
+
+---
+
 ## Statistics
 
 **Lines of Code Changed (v0.0.9):**

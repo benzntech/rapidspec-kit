@@ -138,3 +138,81 @@ Create 17 model-specific initialization guide templates (CLAUDE.md, GEMINI.md, e
 
 ---
 
+## [2025-12-27] Automatic UV Package Manager Checking During Init
+
+**Context:**
+Users needed to manually manage UV (Python package manager) versions. RapidSpec projects are best used with the latest UV for optimal performance and feature support. Without auto-updating, users might have outdated UV versions during project initialization.
+
+**Decision:**
+Implement automatic UV version checking and auto-update as an integrated step in the `rapidspec init` command.
+
+**Rationale:**
+1. **User Experience**: Eliminate manual UV management - users get latest version automatically
+2. **Reliability**: GitHub API provides single source of truth for latest version
+3. **Non-Blocking**: UV is optional (users can initialize without it), so check must not fail init
+4. **Performance**: Early check catches outdated versions before template download
+5. **Transparency**: Full StepTracker integration shows users what's happening
+
+**Alternatives Considered:**
+
+1. **Warn users about outdated UV** - REJECTED
+   - Users might ignore warnings
+   - Extra manual step required
+   - Reduces setup friction reduction benefit
+
+2. **Force UV update (blocking)** - REJECTED
+   - Init would fail if UV unavailable
+   - Users without UV couldn't initialize projects
+   - Violates RapidSpec principle of flexible tooling
+
+3. **Skip UV checking entirely** - REJECTED
+   - Users might miss important updates
+   - Defeats purpose of optimizing project setup
+   - No benefit to project initialization experience
+
+**Implementation Strategy:**
+- Version detection: `uv --version` command
+- Latest version source: GitHub API (astral-sh/uv/releases/latest)
+- Update mechanism: `uv self update` (built-in command)
+- Version comparison: Convert X.Y.Z to integers for reliable comparison
+- Error handling: Non-blocking with graceful fallbacks
+
+**Technical Details:**
+- Function: `check_uv_version(tracker)` in src/specify_cli/__init__.py
+- Helper: `_compare_versions(current, latest)` for semantic version comparison
+- Integration point: Early in init try block, before template download
+- Tracker step: "uv-check" added to StepTracker
+- Timeouts: 5s for version check, 5s for API call, 30s for update
+
+**Version Comparison Logic:**
+- Converts semantic versions to 9-digit integers for comparison
+- Example: 0.1.5 → 000001005, 1.2.3 → 001002003
+- Handles outdated, current, and newer versions appropriately
+
+**API Integration:**
+- Endpoint: `https://api.github.com/repos/astral-sh/uv/releases/latest`
+- Public API: No authentication required
+- Fallback: If API unavailable, assumes current version is acceptable
+- Timeout: 5 seconds to prevent hanging
+
+**Implications:**
+- Network call adds ~2 seconds to init time (1-2s if up-to-date, 10-35s if update needed)
+- All timeouts have fallbacks to prevent blocking
+- UV updates happen in background during init
+- Users always have latest UV after successful init
+- Non-blocking design means init succeeds even if UV check fails
+
+**Status:**
+- ✅ Feature implemented (commit: ac5f3bb)
+- ✅ Syntax validation passed
+- ✅ Integration tested in workflow
+- ✅ Documentation complete (docs/UV_AUTO_UPDATE.md)
+- ⏳ Production deployment pending
+
+**Related:**
+- Files: src/specify_cli/__init__.py, docs/UV_AUTO_UPDATE.md, .github/workflows/scripts/check-uv-version.sh
+- Commits: ac5f3bb (main implementation)
+- Issue/Proposal: User request to auto-update UV during init
+
+---
+
