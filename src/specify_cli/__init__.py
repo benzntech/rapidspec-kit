@@ -1149,6 +1149,33 @@ def create_model_init_guide(project_path: Path, ai_assistant: str, tracker: Step
             tracker.error("init-guide", f"failed to create: {e}")
         return False
 
+def create_changes_folder(project_path: Path, tracker: StepTracker | None = None) -> bool:
+    """
+    Create .rapidspec/changes/ folder for proposal storage.
+    Only creates folder if .rapidspec/ exists (i.e., if agent folders exist).
+
+    Returns True if successful or already exists, False if skipped.
+    """
+    rapidspec_dir = project_path / ".rapidspec"
+    
+    # Only create changes folder if .rapidspec exists
+    if not rapidspec_dir.exists():
+        if tracker:
+            tracker.skip("changes", "no .rapidspec folder - not created")
+        return False
+    
+    changes_dir = rapidspec_dir / "changes"
+    
+    try:
+        changes_dir.mkdir(parents=True, exist_ok=True)
+        if tracker:
+            tracker.complete("changes", "folder created")
+        return True
+    except Exception as e:
+        if tracker:
+            tracker.error("changes", f"failed to create: {e}")
+        return False
+
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
@@ -1318,6 +1345,7 @@ def init(
         ("cleanup", "Cleanup"),
         ("memory-bank", "Initialize memory bank"),
         ("init-guide", "Create model-specific guide"),
+        ("changes", "Create changes folder"),
         ("git", "Initialize git repository"),
         ("final", "Finalize")
     ]:
@@ -1340,6 +1368,9 @@ def init(
             auto_populate_memory_bank(project_path, selected_ai, tracker=tracker)
 
             create_model_init_guide(project_path, selected_ai, tracker=tracker)
+
+            tracker.start("changes")
+            create_changes_folder(project_path, tracker=tracker)
 
             if not no_git:
                 tracker.start("git")
