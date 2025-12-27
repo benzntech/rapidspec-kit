@@ -1,6 +1,6 @@
 [project]
 name = "rapidspec-cli"
-version = "0.0.14"
+version = "0.0.13"
 description = "RapidSpec CLI - Automate spec-driven development with AI agents. A comprehensive toolkit for RapidSpec-Kit projects."
 requires-python = ">=3.11"
 dependencies = [
