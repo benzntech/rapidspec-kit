@@ -978,6 +978,20 @@ def auto_populate_memory_bank(project_path: Path, ai_assistant: str, tracker: St
     """
     from datetime import datetime
 
+    # Only create .rapidspec/ if agent folders (.claude/, .gemini/, etc.) exist
+    agent_folders = {
+        ".claude", ".gemini", ".github", ".cursor", ".qwen",
+        ".opencode", ".codex", ".windsurf", ".kilocode", ".augment",
+        ".codebuddy", ".qoder", ".roo", ".q", ".shai", ".bob", ".amp"
+    }
+    
+    has_agent_folder = any((project_path / folder).exists() for folder in agent_folders)
+    
+    if not has_agent_folder:
+        if tracker:
+            tracker.skip("memory-bank", "no agent folders found - .rapidspec not created")
+        return False
+
     memory_dir = project_path / ".rapidspec" / "memory"
     templates_dir = project_path / ".rapidspec" / "templates" / "memory"
 
@@ -1047,9 +1061,25 @@ def create_model_init_guide(project_path: Path, ai_assistant: str, tracker: Step
     Copies appropriate model template (CLAUDE.md, GEMINI.md, etc.) to project root
     with placeholders replaced with actual values.
 
-    Returns True if successful, False if template not found.
+    Only creates guide if agent folders (.claude/, .gemini/, etc.) exist.
+
+    Returns True if successful, False if template not found or no agent folders.
     """
     from datetime import datetime
+
+    # Only create init guide if agent folders exist
+    agent_folders = {
+        ".claude", ".gemini", ".github", ".cursor", ".qwen",
+        ".opencode", ".codex", ".windsurf", ".kilocode", ".augment",
+        ".codebuddy", ".qoder", ".roo", ".q", ".shai", ".bob", ".amp"
+    }
+    
+    has_agent_folder = any((project_path / folder).exists() for folder in agent_folders)
+    
+    if not has_agent_folder:
+        if tracker:
+            tracker.skip("init-guide", "no agent folders found")
+        return False
 
     # Mapping from agent_key to template filename
     AGENT_TO_TEMPLATE = {
