@@ -512,6 +512,118 @@ def check_tool(tool: str, tracker: StepTracker = None) -> bool:
     
     return found
 
+def check_uv_version(tracker: 'StepTracker | None' = None) -> bool:
+    """Check if UV is installed and up-to-date. Auto-update if outdated.
+    
+    Args:
+        tracker: Optional StepTracker to update with results
+        
+    Returns:
+        True if UV is available and up-to-date (or successfully updated), False otherwise
+    """
+    # Check if UV is installed
+    uv_path = shutil.which("uv")
+    if not uv_path:
+        if tracker:
+            tracker.error("uv-check", "UV not installed")
+        return False
+    
+    try:
+        # Get current UV version
+        result = subprocess.run(
+            ["uv", "--version"],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=5
+        )
+        current_version = result.stdout.strip().split()[-1]  # Extract version from output
+        
+        # Fetch latest UV version from GitHub API
+        try:
+            response = httpx.get(
+                "https://api.github.com/repos/astral-sh/uv/releases/latest",
+                timeout=5
+            )
+            response.raise_for_status()
+            latest_version = response.json()["tag_name"].lstrip("v")
+        except Exception as e:
+            # If we can't fetch latest version, assume current is ok
+            if tracker:
+                tracker.complete("uv-check", f"v{current_version} (couldn't verify latest)")
+            return True
+        
+        # Compare versions
+        if _compare_versions(current_version, latest_version) == "outdated":
+            if tracker:
+                tracker.start("uv-check")
+                tracker.update("uv-check", f"Updating UV from v{current_version} to v{latest_version}...")
+            
+            # Download and install latest UV
+            try:
+                # UV provides an installation script
+                install_result = subprocess.run(
+                    ["uv", "self", "update"],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+                
+                if install_result.returncode == 0:
+                    if tracker:
+                        tracker.complete("uv-check", f"Updated to v{latest_version}")
+                    return True
+                else:
+                    if tracker:
+                        tracker.error("uv-check", f"Update failed: {install_result.stderr}")
+                    return False
+            except subprocess.TimeoutExpired:
+                if tracker:
+                    tracker.error("uv-check", "Update timed out")
+                return False
+        else:
+            if tracker:
+                tracker.complete("uv-check", f"v{current_version} (up-to-date)")
+            return True
+            
+    except subprocess.TimeoutExpired:
+        if tracker:
+            tracker.error("uv-check", "Version check timed out")
+        return False
+    except Exception as e:
+        if tracker:
+            tracker.error("uv-check", f"Check failed: {str(e)}")
+        return False
+
+def _compare_versions(current: str, latest: str) -> str:
+    """Compare two version strings in X.Y.Z format.
+    
+    Returns:
+        "outdated" if current < latest
+        "current" if current == latest
+        "newer" if current > latest
+    """
+    def version_to_int(v: str) -> int:
+        """Convert version string to integer for comparison."""
+        parts = v.split(".")
+        # Pad with zeros to make 3-part version
+        while len(parts) < 3:
+            parts.append("0")
+        try:
+            return int(parts[0]) * 1_000_000 + int(parts[1]) * 1_000 + int(parts[2])
+        except (ValueError, IndexError):
+            return 0
+    
+    current_int = version_to_int(current)
+    latest_int = version_to_int(latest)
+    
+    if current_int < latest_int:
+        return "outdated"
+    elif current_int == latest_int:
+        return "current"
+    else:
+        return "newer"
+
 def is_git_repo(path: Path = None) -> bool:
     """Check if the specified path is inside a git repository."""
     if path is None:
@@ -1333,6 +1445,7 @@ def init(
 
     tracker.add("precheck", "Check required tools")
     tracker.complete("precheck", "ok")
+    tracker.add("uv-check", "Check UV package manager")
     tracker.add("ai-select", "Select AI assistant")
     tracker.complete("ai-select", f"{selected_ai}")
     tracker.add("script-select", "Select script type")
@@ -1359,6 +1472,11 @@ def init(
     with Live(tracker.render(), console=console, refresh_per_second=8, transient=True) as live:
         tracker.attach_refresh(lambda: live.update(tracker.render()))
         try:
+            # Check UV version early (before downloading template)
+            tracker.start("uv-check")
+            if not check_uv_version(tracker=tracker):
+                tracker.error("uv-check", "UV check failed but continuing")
+            
             verify = not skip_tls
             local_ssl_context = ssl_context if verify else False
             local_client = httpx.Client(verify=local_ssl_context)
