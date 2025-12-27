@@ -311,5 +311,44 @@ git log --oneline -3
 
 **Status**: ✅ Merged to main and live
 
+### [2025-12-27 16:45:00] - Released v0.0.13 with Feature Branch Enhancements
+
+**Release**: v0.0.13 - Feature Branch Workflows
+
+**What was released**:
+- Enhanced `/rapidspec.commit` command with automatic feature/fix branches
+- All 34 template packages (17 models × 2 script types)
+- Comprehensive release notes documenting the enhancement
+- PR #2 features merged into release
+
+**Release Process**:
+- ✅ Version bumped: 0.0.12 → 0.0.13 in pyproject.toml
+- ✅ Release notes created: RELEASE_NOTES_v0.0.13.md (380 lines)
+- ✅ Commit created: 7bd1501 - chore: bump version and add release notes
+- ✅ Git tag created: v0.0.13
+- ✅ Pushed to origin: commits + tags
+- ✅ Workflow triggered: GitHub Actions release.yml
+- ✅ Release created: https://github.com/benzntech/rapidspec-kit/releases/tag/v0.0.13
+- ✅ All 34 packages uploaded
+
+**Key Features in v0.0.13**:
+1. Automatic feature/fix branch creation
+2. Branch type mapping (feat→feature, fix→fix, etc)
+3. Push to feature branch (not main)
+4. PR creation suggestions
+5. Complete workflow examples
+
+**Release Stats**:
+- Commit: 7bd1501
+- Tag: v0.0.13
+- Packages: 34 (all uploaded)
+- Release URL: https://github.com/benzntech/rapidspec-kit/releases/tag/v0.0.13
+- Status: ✅ Published (Latest)
+
+**Timeline**:
+- 10:10:51 - Release created by GitHub Actions
+- 10:12:00 - Release published
+- 34 packages available for download
+
 ---
 
