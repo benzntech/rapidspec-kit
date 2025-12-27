@@ -281,5 +281,35 @@ git log --oneline -3
 - Memory bank synchronized ✅
 - v0.0.12 in production ✅
 
+### [2025-12-27 16:30:00] - Enhanced /rapidspec.commit for Feature Branches
+
+**Enhancement**: `/rapidspec.commit` now automatically creates feature/fix branches
+
+**Changes Made**:
+- Added Step 0: Create Feature/Fix Branch before committing
+- Added Step 7: Push to Feature Branch (not main)
+- Added Step 8: Suggest Next Steps (PR, review, archive)
+- Updated all 3 examples to show feature branch workflow
+
+**Branch Mapping**:
+- `feat(...)` → `feature/[change-id]`
+- `fix(...)` → `fix/[change-id]`
+- `refactor(...)` → `refactor/[change-id]`
+- `perf(...)` → `perf/[change-id]`
+- Other → `chore/[change-id]`
+
+**Benefits**:
+- All RapidSpec changes go through feature branches
+- Ensures PR review before merging to main
+- Prevents direct commits to main
+- Better git history organization
+
+**Commits**:
+- Commit: 3c231d5 - feat(rapidspec): enhance /rapidspec.commit
+- PR: #2 (merged to main)
+- Merge: c101aaa
+
+**Status**: ✅ Merged to main and live
+
 ---
 
