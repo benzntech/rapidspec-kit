@@ -1,0 +1,113 @@
+name: Auto Release on Version Change
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'pyproject.toml'
+
+jobs:
+  auto-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get version from pyproject.toml
+        id: version
+        run: |
+          VERSION=$(grep -m 1 'version = ' pyproject.toml | sed 's/.*version = "\([^"]*\)".*/\1/')
+          echo "current_version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+
+      - name: Check if release already exists
+        id: check_release
+        run: |
+          RELEASE_TAG="${{ steps.version.outputs.version_tag }}"
+          if gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release $RELEASE_TAG already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release $RELEASE_TAG does not exist - will create"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run create release workflow
+        if: steps.check_release.outputs.exists == 'false'
+        run: |
+          echo "Triggering release workflow for ${{ steps.version.outputs.version_tag }}"
+          gh workflow run release.yml \
+            --repo ${{ github.repository }} \
+            --ref ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for release workflow
+        if: steps.check_release.outputs.exists == 'false'
+        run: |
+          echo "Waiting for release workflow to complete..."
+          # Give workflow time to start
+          sleep 10
+          
+          # Check workflow status (basic polling)
+          for i in {1..60}; do
+            WORKFLOW_RUN=$(gh run list --workflow=release.yml --limit=1 --json 'status,conclusion' --jq '.[0]')
+            STATUS=$(echo "$WORKFLOW_RUN" | jq -r '.status')
+            CONCLUSION=$(echo "$WORKFLOW_RUN" | jq -r '.conclusion')
+            
+            echo "Check $i: Status=$STATUS, Conclusion=$CONCLUSION"
+            
+            if [ "$STATUS" = "completed" ]; then
+              if [ "$CONCLUSION" = "success" ]; then
+                echo "✓ Release workflow completed successfully"
+                exit 0
+              else
+                echo "✗ Release workflow failed"
+                exit 1
+              fi
+            fi
+            
+            # Wait 30 seconds before next check
+            sleep 30
+          done
+          
+          echo "Release workflow still running (normal for large releases)"
+          exit 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Post workflow summary
+        if: always()
+        run: |
+          VERSION="${{ steps.version.outputs.current_version }}"
+          TAG="${{ steps.version.outputs.version_tag }}"
+          
+          echo "## Auto Release Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release Tag | $TAG |" >> $GITHUB_STEP_SUMMARY
+          echo "| Already Exists | ${{ steps.check_release.outputs.exists }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Trigger Commit | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check_release.outputs.exists }}" = "false" ]; then
+            echo "✓ Release workflow triggered for $TAG" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Next steps:**" >> $GITHUB_STEP_SUMMARY
+            echo "- Release packages are being generated" >> $GITHUB_STEP_SUMMARY
+            echo "- GitHub release will be created automatically" >> $GITHUB_STEP_SUMMARY
+            echo "- All 34 template packages will be available shortly" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ Release $TAG already exists - no new release created" >> $GITHUB_STEP_SUMMARY
+          fi
