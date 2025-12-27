@@ -1,0 +1,43 @@
+# CodeBuddy - RapidSpec Quick Start
+
+This project was initialized with **CodeBuddy** on [TIMESTAMP].
+
+## RapidSpec Commands (10 Total)
+
+### Core Workflow
+1. `/rapidspec.constitution` - Principles | **First**
+2. `/rapidspec.proposal` - Plan | **Before impl**
+3. `/rapidspec.apply` - Implement | **After proposal**
+4. `/rapidspec.review` - Quality check | **Before commit**
+5. `/rapidspec.commit` - Save & document | **After apply**
+
+### Advanced
+6. `/rapidspec.archive` - Mark complete
+7. `/rapidspec.triage` - Categorize issues
+8. `/rapidspec.finalize` - Release prep
+9. `/rapidspec.resolve-parallel` - Merge features
+10. `/rapidspec.umb` - Update memory
+
+---
+
+## Workflow
+
+✅ Constitution → Proposal → Apply → Review → Commit → Archive
+
+---
+
+## Memory Bank (`.rapidspec/memory/`)
+
+6 files for project context and decisions.
+
+---
+
+## Learn More
+
+- Workflow: `AGENTS.md`
+- CodeBuddy: [codebuddy.ai/cli](https://www.codebuddy.ai/cli)
+- RapidSpec: [github.com/benzntech/rapidspec-kit](https://github.com/benzntech/rapidspec-kit)
+
+---
+
+*Generated for CodeBuddy on [TIMESTAMP] by RapidSpec Init*
